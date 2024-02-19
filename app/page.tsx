@@ -6,18 +6,26 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
 	const [reveal, setReveal] = useState(false);
+	const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-	let audio: any;
 	useEffect(() => {
-		// Create the Audio object on the client side
-		audio = new Audio(getRandomNote());
-	  }, []);
+		setAudio(new Audio(getRandomNote()));
+	}, [])
+
+	if (!audio)
+		return;
+	
 	function onShuffle() {
+		if (!audio) 
+			return;
 		setReveal(false);
 		audio.currentTime = 0;
 		audio.src = getRandomNote();
-	}
+	  }
+	  
 	function onPlay() {
+		if (!audio) 
+			return;
 		audio.currentTime = 0;
 		audio.play();
 	}
