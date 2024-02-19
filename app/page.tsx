@@ -2,6 +2,7 @@
 
 import { getRandomNote } from "@/components/Notes";
 import Reveal from "@/components/Reveal";
+import PlaySound from "@/hooks/SoundEffect";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
 		return;
 	
 	function onShuffle() {
+		PlaySound("/sounds/button.wav");
 		if (!audio) 
 			return;
 		setReveal(false);
@@ -30,7 +32,7 @@ export default function Home() {
 		audio.play();
 	}
   return (
-	<main className="flex flex-col md:p-12 items-center justify-center gap-3 h-[100vh]">
+	<main className="flex flex-col max-w-2xl m-auto lg:p-12 items-center justify-center gap-3 h-[100vh]">
 		<Reveal reveal={reveal} setReveal={setReveal} audio={audio} />
 		<button className="w-1/4" onClick={onPlay}>Play</button>
 		<button className="w-1/4" onClick={onShuffle}>Shuffle</button>
