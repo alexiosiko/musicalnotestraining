@@ -32,7 +32,7 @@ export default function Home() {
 		audio.play();
 	}
   return (
-	<main className="flex flex-col max-w-2xl m-auto lg:p-12 items-center justify-center gap-3 h-[100vh]">
+	<main className="flex flex-col max-w-2xl m-auto items-center justify-center gap-3 h-[100vh]">
 		<Reveal reveal={reveal} setReveal={setReveal} audio={audio} />
 		<button className="w-1/4" onClick={onPlay}>Play</button>
 		<button className="w-1/4" onClick={onShuffle}>Shuffle</button>
