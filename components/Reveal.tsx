@@ -26,7 +26,7 @@ export default function Reveal({ audio, reveal, setReveal }: {
 	return (
 		<button
 			onClick={onClick}
-			className="w-2/3 aspect-square text-center">
+			className="w-full h-1/3 aspect-square text-center">
 				{reveal ?
 					<div>
 						{getNote()}
