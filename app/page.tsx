@@ -7,33 +7,41 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
 	const [reveal, setReveal] = useState(false);
-	const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-
+	const [audios, setAudios] = useState<HTMLAudioElement[] | null>(null);
 	useEffect(() => {
-		setAudio(new Audio(getRandomNote()));
-	}, [])
-
-	if (!audio)
+		setAudios([]);
+		}, [])
+		
+	if (!audios)
 		return;
-	
+
+	console.log(audios);
 	function onShuffle() {
 		PlaySound("/sounds/button.wav");
-		if (!audio) 
+
+		if (audios == null) 
 			return;
+
 		setReveal(false);
-		audio.currentTime = 0;
-		audio.src = getRandomNote();
+		setAudios([
+			new Audio(getRandomNote()),
+			new Audio(getRandomNote()),
+			new Audio(getRandomNote()),
+			new Audio(getRandomNote()),
+		  ]);
 	  }
 	  
-	function onPlay() {
-		if (!audio) 
+	async function onPlay() {
+		if (!audios) 
 			return;
-		audio.currentTime = 0;
-		audio.play();
+		for (let i = 0; i < audios.length; i++) {
+			audios[i].play();
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		}
 	}
   return (
 	<main className="flex flex-col max-w-2xl m-auto items-center justify-evenly gap-3 h-[100vh]">
-		<Reveal reveal={reveal} setReveal={setReveal} audio={audio} />
+		<Reveal reveal={reveal} setReveal={setReveal} audio={audios} />
 		<button className="w-full h-1/6" onClick={onPlay}>Play</button>
 		<button className="w-full h-1/6" onClick={onShuffle}>Shuffle</button>
 	</main>

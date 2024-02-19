@@ -21,8 +21,8 @@ export function getRandomNote() {
 }
 export function pathToNote(path: string): string {
 	// http://localhost:3000/notes/A.mp3
-	let str = path.substring(path.length - 6, path.length);
-	str = str.replaceAll('/', '');
-	str = str.replaceAll(".mp3", '');
-	return str;
+	// let str = path.substring(path.length - 6, path.length);
+	// str = str.replaceAll('/', '');
+	// str = str.replaceAll(".mp3", '');
+	return path;
 }

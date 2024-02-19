@@ -5,7 +5,7 @@ import { pathToNote } from "./Notes";
 import PlaySound from "@/hooks/SoundEffect";
 
 export default function Reveal({ audio, reveal, setReveal }: { 
-	audio: HTMLAudioElement,
+	audio: HTMLAudioElement[],
 	reveal: boolean,
 	setReveal: Dispatch<SetStateAction<boolean>>,
 }) {
@@ -18,9 +18,11 @@ export default function Reveal({ audio, reveal, setReveal }: {
 		return
 	}
 	function getNote() {
-		const note: string = pathToNote(audio.src);
+		const note: string[] = audio.map(( audio, index: number) => 
+			audio.src
+		)
 		return <div>
-			{note}
+			{note.toString()}
 		</div>
 	}
 	return (
