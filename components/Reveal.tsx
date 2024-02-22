@@ -24,6 +24,7 @@ export default function Reveal({ audio, reveal, setReveal }: {
 			let str = audio.src;
 			str = str.slice(str.length - 6, str.length - 4);
 			str = str.replace('/', '');
+			str = str.replace('s', '#');
 			return str;
 		}
 		)
@@ -34,7 +35,7 @@ export default function Reveal({ audio, reveal, setReveal }: {
 	return (
 		<Button
 			onClick={onClick}
-			className="w-full h-1/2 aspect-square text-center text-wrap">
+			className="w-full h-1/3 aspect-square text-center text-wrap">
 				{reveal ?
 					<div>
 						{getNote()}
