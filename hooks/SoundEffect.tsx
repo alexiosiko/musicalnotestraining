@@ -1,5 +1,8 @@
 "use client"
 
+const source = new Audio();
 export default function PlaySound(src: string) {
-	new Audio(src).play();
+	source.src = src;
+	source.currentTime = 0;
+	source.play();
 }

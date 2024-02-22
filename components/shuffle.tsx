@@ -30,7 +30,6 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 
 		let newAudios = Array.from({ length: noteCount }, () => new Audio(getRandomNote()));
 
-
 		setAudios(newAudios);
 	}
 	return (
