@@ -4,7 +4,7 @@ import "./globals.css";
 
 const inter = Poppins({
 	subsets: ["latin"],
-	weight: "600",
+	weight: "600"
 });
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark sm:text-5xl bg-background">
+    <html lang="en" className="dark sm:text-8xl text-3xl bg-background">
 		<body className={inter.className}>
             {children}
 		</body>
