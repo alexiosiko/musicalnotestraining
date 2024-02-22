@@ -22,7 +22,7 @@ export default function Home() {
 	
   return (
 	<main className="flex flex-col justify-around h-[100vh] p-2 gap-1">
-		<p className="text-foreground text-center p-2">Current notes length: {audios.length}</p>
+		<p className="text-foreground text-center sm:p-2 max-sm:text-xs">Current notes length: {audios.length}</p>
 		<Reveal reveal={reveal} setReveal={setReveal} audio={audios} />
 		<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 		<Shuffle setIsPlaying={setIsPlaying} audios={audios} noteCount={noteCount} setAudios={setAudios} setReveal={setReveal} />
