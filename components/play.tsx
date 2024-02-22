@@ -9,8 +9,10 @@ export default function Play({ audios, isPlaying, setIsPlaying }: {
 	async function onPlay() {
 		if (audios == undefined || audios == null)
 			return;
-
 		setIsPlaying(true);
+
+		// Wait 0.2 secs for to start
+		await new Promise((resolve) => setTimeout(resolve, 200));
 		
 		for (let i = 0; i < audios.length; i++) {
 			audios[i].currentTime = 0;
