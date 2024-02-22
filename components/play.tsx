@@ -12,7 +12,7 @@ export default function Play({ audios, isPlaying, setIsPlaying }: {
 		setIsPlaying(true);
 
 		// Wait 0.2 secs for to start
-		await new Promise((resolve) => setTimeout(resolve, 200));
+		await new Promise((resolve) => setTimeout(resolve, 500));
 		
 		for (let i = 0; i < audios.length; i++) {
 			audios[i].currentTime = 0;
