@@ -1,25 +1,31 @@
 "use client"
 
-import { getRandomNote } from "@/components/Notes";
+import { Notes, getRandomNote } from "@/components/Notes";
 import Reveal from "@/components/Reveal";
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import Play from "@/components/play";
 import Shuffle from "@/components/shuffle";
+import { Howl } from 'howler';
 
 export default function Home() {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [noteCount, setNoteCount] = useState(2);
 	const [reveal, setReveal] = useState(false);
-	const [audios, setAudios] = useState<HTMLAudioElement[]>();
+	const [audios, setAudios] = useState<Howl[]>();
 
+
+	
 	useEffect(() => {
-		setAudios([ new Audio(getRandomNote()) ]);
+		setAudios([
+			new Howl({ src: getRandomNote()})
+		]);
 	}, [])
-		
+	
 	if (!audios)
 		return;
-	
+
+
   return (
 	<main className="flex flex-col justify-around h-[100vh] p-2 gap-1">
 		<p className="text-foreground text-center sm:p-2 max-sm:text-xs">Current notes length: {audios.length}</p>

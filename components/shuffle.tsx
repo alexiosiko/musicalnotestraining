@@ -4,17 +4,16 @@ import { Dispatch, SetStateAction } from "react";
 import { getRandomNote } from "@/components/Notes";
 
 export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIsPlaying }: { 
-	audios: HTMLAudioElement[] | undefined,
-	setAudios: Dispatch<SetStateAction<HTMLAudioElement[] | undefined>>
+	audios: Howl[] | undefined,
+	setAudios: Dispatch<SetStateAction<Howl[] | undefined>>
 	noteCount: number,
 	setReveal: Dispatch<SetStateAction<boolean>>,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>
 }) {
 	function stopAudios() {
-		audios?.forEach(audio => {
-			audio.currentTime = 0;
-			audio.pause;
-			audio.src = "";
+		audios?.forEach((audio: any) => {
+			audio.stop();
+			audio._src = "";
 		})
 		setIsPlaying(false);
 	}
@@ -28,7 +27,9 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 
 		setReveal(false);
 
-		let newAudios = Array.from({ length: noteCount }, () => new Audio(getRandomNote()));
+		let newAudios = Array.from({ length: noteCount }, () => new Howl({
+			src: getRandomNote()}
+		));
 
 		setAudios(newAudios);
 	}
