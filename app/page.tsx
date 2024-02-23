@@ -10,9 +10,6 @@ import { Howl } from 'howler';
 import { Checkbox } from "@/components/ui/checkbox";
 import { Audio } from "@/types/audio";
 
-
-
-
 export default function Home() {
 	const [isLinear, setIsLinear] = useState(true);
 	const [isPlaying, setIsPlaying] = useState(false);

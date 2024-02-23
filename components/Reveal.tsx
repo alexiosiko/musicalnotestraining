@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react"
 import PlaySound from "@/hooks/SoundEffect";
 import { Button } from "./ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
-import { Audio } from "@/app/page";
+import { Audio } from "@/types/audio";
 
 export default function Reveal({ audio, reveal, setReveal }: { 
 	audio: Audio[],
