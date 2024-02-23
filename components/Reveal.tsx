@@ -4,9 +4,10 @@ import { Dispatch, SetStateAction } from "react"
 import PlaySound from "@/hooks/SoundEffect";
 import { Button } from "./ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { Audio } from "@/app/page";
 
 export default function Reveal({ audio, reveal, setReveal }: { 
-	audio: Howl[],
+	audio: Audio[],
 	reveal: boolean,
 	setReveal: Dispatch<SetStateAction<boolean>>,
 }) {
@@ -20,7 +21,7 @@ export default function Reveal({ audio, reveal, setReveal }: {
 	}
 	function getNote() {
 		const note: string[] = audio.map((audio: any) => {
-			let str = audio._src;
+			let str = audio.howl._src;
 			str = str.slice(str.length - 6, str.length - 4);
 			str = str.replace('/', '');
 			str = str.replace('s', '#');

@@ -2,19 +2,20 @@ import { Button } from "@/components/ui/button";
 import PlaySound from "@/hooks/SoundEffect";
 import { Dispatch, SetStateAction } from "react";
 import { getRandomNote } from "@/components/Notes";
+import { Audio } from "@/app/page";
 
 export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIsPlaying, isPlaying }: { 
-	audios: Howl[] | undefined,
-	setAudios: Dispatch<SetStateAction<Howl[] | undefined>>
+	audios: Audio[] | undefined,
+	setAudios: Dispatch<SetStateAction<Audio[] | undefined>>
 	noteCount: number,
 	setReveal: Dispatch<SetStateAction<boolean>>,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>
-	isPlaying: boolean
+	isPlaying: boolean,
 }) {
 	function killAudios() {
 		audios?.forEach((audio: any) => {
-			audio.stop();
-			audio._src = "";
+			audio.howl.stop();
+			audio.howl._src = "";
 		})
 		setIsPlaying(true);
 	}
@@ -28,8 +29,10 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 
 		setReveal(false);
 
-		let newAudios = Array.from({ length: noteCount }, () => new Howl({
-			src: getRandomNote()}
+		const delay = Math.random() * (750 - 200) + 200;
+
+		let newAudios = Array.from({ length: noteCount }, () => new Audio(
+			new Howl({src: getRandomNote()}), delay
 		));
 
 		setAudios(newAudios);
@@ -39,7 +42,7 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 	return (
 		<Button 
 			disabled={isPlaying}
-			className="w-full h-1/6"
+			className="w-full h-full"
 			onClick={onShuffle}>Shuffle</Button>
 		
 	)
