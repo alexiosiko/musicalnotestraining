@@ -10,12 +10,12 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 	setReveal: Dispatch<SetStateAction<boolean>>,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>
 }) {
-	function stopAudios() {
+	function killAudios() {
 		audios?.forEach((audio: any) => {
 			audio.stop();
 			audio._src = "";
 		})
-		setIsPlaying(false);
+		setIsPlaying(true);
 	}
 	function onShuffle() {
 		PlaySound("/sounds/button.wav");
@@ -23,7 +23,7 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 		if (audios == null) 
 			return;
 
-		stopAudios();
+		killAudios();
 
 		setReveal(false);
 
@@ -32,6 +32,8 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 		));
 
 		setAudios(newAudios);
+
+		setIsPlaying(false);
 	}
 	return (
 		<Button className="w-full h-1/6" onClick={onShuffle}>Shuffle</Button>
