@@ -1,5 +1,3 @@
-import { randomInt } from "crypto";
-
 export const Notes = [
 	"/notes/A.mp3",
     "/notes/As.mp3",
