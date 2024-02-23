@@ -31,7 +31,7 @@ export default function Home() {
 		<p className="text-foreground text-center sm:p-2 max-sm:text-xs">Current notes length: {audios.length}</p>
 		<Reveal reveal={reveal} setReveal={setReveal} audio={audios} />
 		<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
-		<Shuffle setIsPlaying={setIsPlaying} audios={audios} noteCount={noteCount} setAudios={setAudios} setReveal={setReveal} />
+		<Shuffle isPlaying={isPlaying} setIsPlaying={setIsPlaying} audios={audios} noteCount={noteCount} setAudios={setAudios} setReveal={setReveal} />
 		<div className="text-center gap-2 flex">
 			<p className="text-foreground">{noteCount}</p>
 			<Slider min={1} max={5} defaultValue={[ 2 ]} onValueChange={(value) => setNoteCount(value[0])} />

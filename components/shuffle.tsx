@@ -3,12 +3,13 @@ import PlaySound from "@/hooks/SoundEffect";
 import { Dispatch, SetStateAction } from "react";
 import { getRandomNote } from "@/components/Notes";
 
-export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIsPlaying }: { 
+export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIsPlaying, isPlaying }: { 
 	audios: Howl[] | undefined,
 	setAudios: Dispatch<SetStateAction<Howl[] | undefined>>
 	noteCount: number,
 	setReveal: Dispatch<SetStateAction<boolean>>,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>
+	isPlaying: boolean
 }) {
 	function killAudios() {
 		audios?.forEach((audio: any) => {
@@ -36,7 +37,10 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 		setIsPlaying(false);
 	}
 	return (
-		<Button className="w-full h-1/6" onClick={onShuffle}>Shuffle</Button>
+		<Button 
+			disabled={isPlaying}
+			className="w-full h-1/6"
+			onClick={onShuffle}>Shuffle</Button>
 		
 	)
 }
