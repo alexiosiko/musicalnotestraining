@@ -1,6 +1,6 @@
 "use client"
 
-import { Notes, getRandomNote } from "@/components/Notes";
+import { getRandomNote } from "@/components/Notes";
 import Reveal from "@/components/Reveal";
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
@@ -8,17 +8,10 @@ import Play from "@/components/play";
 import Shuffle from "@/components/shuffle";
 import { Howl } from 'howler';
 import { Checkbox } from "@/components/ui/checkbox";
+import { Audio } from "@/types/audio";
 
 
-export class Audio {
-	howl: Howl;
-	delay: number;
-	constructor(howl: Howl, delay: number) {
-		this.howl = howl;
-		this.delay = delay;
-	}
-	
-}
+
 
 export default function Home() {
 	const [isLinear, setIsLinear] = useState(true);

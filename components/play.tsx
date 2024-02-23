@@ -1,5 +1,5 @@
-import { Audio } from "@/app/page";
 import { Button } from "@/components/ui/button";
+import { Audio } from "@/types/audio";
 import { Dispatch, SetStateAction } from "react";
 
 export default function Play({ audios, isLinear, isPlaying, setIsPlaying }: { 

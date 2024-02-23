@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import PlaySound from "@/hooks/SoundEffect";
 import { Dispatch, SetStateAction } from "react";
 import { getRandomNote } from "@/components/Notes";
-import { Audio } from "@/app/page";
+import { Audio } from "@/types/audio";
 
 export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIsPlaying, isPlaying }: { 
 	audios: Audio[] | undefined,
