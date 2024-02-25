@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Poppins({
 	subsets: ["latin"],
@@ -26,19 +27,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="dark sm:text-8xl text-4xl bg-background">
-		  <Head>
-			{/* Other meta tags and head elements */}
-			<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11448837278"></script>
-			<script>
-			  window.dataLayer = window.dataLayer || [];
-			  function gtag() { window.dataLayer.push(arguments); }
-			  gtag('js', new Date());
-			  gtag('config', 'AW-11448837278');
-			</script>
-		  </Head>
+
 		  <body className={inter.className}>
 			{children}
 		  </body>
+		<Analytics />
 		</html>
 	  );
 }
