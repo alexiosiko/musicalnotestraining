@@ -18,14 +18,12 @@ export default function Home() {
 	const [audios, setAudios] = useState<Audio[]>();
 	
 	useEffect(() => {
-		const howl = new Howl({ 
-			src: getRandomNote(),
-		})
-		const delay = Math.random() * (750 - 200) + 200;
-		setAudios([ 
-			new Audio(howl, delay ),
-			new Audio(howl, delay ),
-			new Audio(howl, delay ) ]);
+		let newAudios = Array.from({ length: noteCount }, () => new Audio(
+			new Howl({
+				src: getRandomNote()}),
+				Math.random() * (750 - 200) + 200
+		));
+		setAudios(newAudios);
 	}, [])
 	
 	if (!audios)
@@ -44,7 +42,6 @@ export default function Home() {
 			<label className="text-foreground">Is Timing Linear?</label>
 		</div>
 		<div className="flex gap-1">
-
 			<p>{noteCount}</p>
 			<Slider min={1} max={5} defaultValue={[ 2 ]} onValueChange={(value) => setNoteCount(value[0])} />
 		</div>

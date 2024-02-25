@@ -29,10 +29,11 @@ export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIs
 
 		setReveal(false);
 
-		const delay = Math.random() * (750 - 200) + 200;
 
 		let newAudios = Array.from({ length: noteCount }, () => new Audio(
-			new Howl({src: getRandomNote()}), delay
+			new Howl({
+				src: getRandomNote()}),
+				Math.random() * (750 - 200) + 200
 		));
 
 		setAudios(newAudios);
