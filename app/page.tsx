@@ -13,7 +13,7 @@ import { Audio } from "@/types/audio";
 export default function Home() {
 	const [isLinear, setIsLinear] = useState(true);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [noteCount, setNoteCount] = useState(2);
+	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>();
 	
@@ -22,7 +22,10 @@ export default function Home() {
 			src: getRandomNote(),
 		})
 		const delay = Math.random() * (750 - 200) + 200;
-		setAudios([ new Audio(howl, delay )]);
+		setAudios([ 
+			new Audio(howl, delay ),
+			new Audio(howl, delay ),
+			new Audio(howl, delay ) ]);
 	}, [])
 	
 	if (!audios)
