@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react"
+import { ClerkProvider, SignIn, SignInButton, UserButton } from "@clerk/nextjs";
+import Nav from "@/components/nav";
 
 const inter = Poppins({
 	subsets: ["latin"],
@@ -26,12 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className="dark sm:text-8xl text-4xl bg-background">
-
-		  <body className={inter.className}>
-			{children}
-		  </body>
-		<Analytics />
-		</html>
+		<ClerkProvider>
+			<html lang="en" className="dark text-foreground bg-background">
+				<body className={inter.className}>
+					<Nav />
+					{children}
+				</body>
+				<Analytics />
+			</html>
+		</ClerkProvider>
 	  );
 }

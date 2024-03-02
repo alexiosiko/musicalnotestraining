@@ -1,50 +1,23 @@
 import { Button } from "@/components/ui/button";
-import PlaySound from "@/hooks/SoundEffect";
 import { Dispatch, SetStateAction } from "react";
-import { getRandomNote } from "@/components/Notes";
+import { getRandomBouzoukiNote, getRandomPianoNote } from "@/lib/notes";
 import { Audio } from "@/types/audio";
+import { LuShuffle } from "react-icons/lu";
 
-export default function Shuffle({ audios, setAudios, noteCount, setReveal, setIsPlaying, isPlaying }: { 
-	audios: Audio[] | undefined,
-	setAudios: Dispatch<SetStateAction<Audio[] | undefined>>
-	noteCount: number,
-	setReveal: Dispatch<SetStateAction<boolean>>,
-	setIsPlaying: Dispatch<SetStateAction<boolean>>
+export default function Shuffle({ onShuffle, isPlaying }: { 
+	onShuffle:  () => void,
 	isPlaying: boolean,
 }) {
-	function killAudios() {
-		audios?.forEach((audio: any) => {
-			audio.howl.stop();
-			audio.howl._src = "";
-		})
-		setIsPlaying(true);
-	}
-	function onShuffle() {
-		PlaySound("/sounds/button.wav");
-
-		if (audios == null) 
-			return;
-
-		killAudios();
-
-		setReveal(false);
-
-
-		let newAudios = Array.from({ length: noteCount }, () => new Audio(
-			new Howl({
-				src: getRandomNote()}),
-				Math.random() * (750 - 200) + 200
-		));
-
-		setAudios(newAudios);
-
-		setIsPlaying(false);
-	}
+	
+	
 	return (
 		<Button 
+			variant={"ghost"}
 			disabled={isPlaying}
-			className="w-full h-full"
-			onClick={onShuffle}>Shuffle</Button>
+			className="text-3xl"
+			onClick={onShuffle}>
+				<LuShuffle />
+		</Button>
 		
 	)
 }

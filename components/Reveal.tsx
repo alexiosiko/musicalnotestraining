@@ -1,7 +1,6 @@
 "use client"
 
 import { Dispatch, SetStateAction } from "react"
-import PlaySound from "@/hooks/SoundEffect";
 import { Button } from "./ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Audio } from "@/types/audio";
@@ -12,12 +11,7 @@ export default function Reveal({ audio, reveal, setReveal }: {
 	setReveal: Dispatch<SetStateAction<boolean>>,
 }) {
 	function onClick() {
-		if (reveal == true)
-			PlaySound("/sounds/hide.wav")
-		else
-			PlaySound("/sounds/reveal.wav");
 		setReveal(!reveal);
-		return
 	}
 	function getNote() {
 		const note: string[] = audio.map((audio: any) => {
@@ -34,10 +28,12 @@ export default function Reveal({ audio, reveal, setReveal }: {
 	}
 	return (
 		<Button
+		style={{ backgroundImage: `url("/images/instruments/bouzouki-1.png")`}}
 			onClick={onClick}
-			className="w-full h-1/3 aspect-square text-center text-wrap">
+			variant={'secondary'}
+			className="w-full h-[300px] aspect-square bg-cover bg-center flex m-auto text-5xl">
 				{reveal ?
-					<div>
+					<div style={{ textShadow: '2px 2px black'}}>
 						{getNote()}
 					</div> 
 					: 

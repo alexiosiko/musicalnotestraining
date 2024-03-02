@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { Audio } from "@/types/audio";
 import { Dispatch, SetStateAction } from "react";
+import { Button } from "./ui/button";
+import { CiPlay1 } from "react-icons/ci";
 
-export default function Play({ audios, isLinear, isPlaying, setIsPlaying }: { 
+export default function Play({ audios, isPlaying, setIsPlaying }: { 
 	audios: Audio[] | undefined,
 	isPlaying: boolean,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>,
-	isLinear: boolean
 }) {
 	async function onPlay() {
 		if (audios == undefined || audios == null)
@@ -16,17 +16,22 @@ export default function Play({ audios, isLinear, isPlaying, setIsPlaying }: {
 		for (let i = 0; i < audios.length; i++) {
 			audios[i].howl.play();
 
-			const randomDelay = isLinear ? 750 : audios[i].delay;
+			const randomDelay = audios[i].delay;
+			console.log(audios[i].delay); // outputs 0.5
 
-			await new Promise((resolve) => setTimeout(resolve, randomDelay));
+			await new Promise((resolve) => setTimeout(resolve, randomDelay * 1000));
 		}
 		setIsPlaying(false);
 	}
 	return (
-		<Button 
-			className={`w-full h-full`}
+		<Button
 			disabled={isPlaying}
-			onClick={onPlay}>Play
+			onClick={onPlay}		
+			variant={"ghost"}
+
+			className="text-3xl">
+
+			<CiPlay1 className="text-3xl"/>
 		</Button>
 
 	)
