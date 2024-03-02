@@ -6,7 +6,6 @@ import { Slider } from "@/components/ui/slider";
 import Play from "@/components/play";
 import { Howl } from 'howler';
 import { Audio } from "@/types/audio";
-import Reveal from "@/components/reveal";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 
 export default function Index() {
