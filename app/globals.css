@@ -1,10 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
-p {
-	font-size: 2rem;
-}
+
 
 @layer base {
 	:root {
@@ -36,36 +33,56 @@ p {
        URL: https://gradient.page */
 
     /* CSS: .bg-gradient { background: var(--gradient) } */
-    --gradient: #E0EAFC;
+    --gradient: #ffd89b;
 
-    --background: 232 53.3% 7.44%;
-    --foreground: 232 8.2% 99.65%;
+    --background: 39 65% 6.4%;
+    --foreground: 39 10% 99%;
 
-    --muted: 232 41% 27.900000000000002%;
-    --muted-foreground: 232 8.2% 59.3%;
+    --muted: 39 50% 24%;
+    --muted-foreground: 39 10% 58%;
 
-    --popover: 232 48.6% 12.09%;
-    --popover-foreground: 232 8.2% 99.65%;
+    --popover: 39 45% 10.4%;
+    --popover-foreground: 39 10% 99%;
 
-    --card: 232 48.6% 12.09%;
-    --card-foreground: 232 8.2% 99.65%;
+    --card: 39 45% 10.4%;
+    --card-foreground: 39 10% 99%;
 
-    --border: 232 41% 27.900000000000002%;
-    --input: 232 41% 27.900000000000002%;
+    --border: 39 50% 24%;
+    --input: 39 50% 24%;
 
-    --primary: 232 82% 93%;
-    --primary-foreground: 232 8.2% 9.3%;
+    --primary: 39 100% 80%;
+    --primary-foreground: 39 10% 8%;
 
-    --secondary: 232 41% 27.900000000000002%;
-    --secondary-foreground: 232 8.2% 99.65%;
+    --secondary: 39 50% 24%;
+    --secondary-foreground: 39 10% 99%;
 
-    --accent: 232 41% 27.900000000000002%;
-    --accent-foreground: 232 8.2% 99.65%;
+    --accent: 39 50% 24%;
+    --accent-foreground: 39 10% 99%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 232 8.2% 99.65%;
+    --destructive-foreground: 39 10% 99%;
 
-    --ring: 232 82% 93%;
+    --ring: 39 100% 80%;
 	}
   }
   
+
+   
+p {
+	font-size: 2rem;
+}
+
+
+/* Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+	width: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+	background-color: #555;
+  }

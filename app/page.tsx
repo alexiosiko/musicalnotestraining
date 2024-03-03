@@ -8,7 +8,7 @@ export default function Index() {
 		<div 
         	style={{ backgroundImage: `url("/images/landing-photo.png")`}}
 		className='bg-cover bg-center bg-accent h-[600px] rounded-3xl flex'>
-			<p className='m-auto text-5xl text-center' style={{textShadow: '2px 2px black'}}>
+			<p className='m-auto text-5xl text-center text-white' style={{textShadow: '2px 2px black'}}>
 				Ear Training With Real Instruments
 			</p>	
 		</div>
