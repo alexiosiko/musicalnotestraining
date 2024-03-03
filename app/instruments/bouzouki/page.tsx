@@ -7,6 +7,7 @@ import Play from "@/components/play";
 import { Howl } from 'howler';
 import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
+import Reveal from "@/components/reveal";
 
 export default function Index() {
 	const [tempo, setTempo] = useState<number>(0.7);
