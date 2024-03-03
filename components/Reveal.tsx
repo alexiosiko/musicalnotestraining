@@ -14,8 +14,8 @@ export default function Reveal({ audios, reveal, setReveal, src }: {
 	function onClick() {
 		setReveal(!reveal);
 	}
-	function getNote() {
-		const note: string[] | undefined = audios?.map((audio: any) => {
+	function getAndFormateNotes() {
+		const notes: string[] | undefined = audios?.map((audio: any) => {
 			let str = audio.howl._src;
 			str = str.slice(str.length - 6, str.length - 4);
 			str = str.replace('/', '');
@@ -24,7 +24,7 @@ export default function Reveal({ audios, reveal, setReveal, src }: {
 		}
 		)
 		return <div>
-			{note?.toString()}
+			{notes?.toString()}
 		</div>
 	}
 	return (
@@ -35,7 +35,7 @@ export default function Reveal({ audios, reveal, setReveal, src }: {
 			className="w-full h-[300px] aspect-square bg-cover bg-center flex m-auto text-5xl">
 				{reveal ?
 					<div style={{ textShadow: '2px 2px black'}}>
-						{getNote()}
+						{getAndFormateNotes()}
 					</div> 
 					: 
 					<div>
