@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function Index() {
   return (
-	<div className='max-w-5xl m-auto mt-10 flex flex-col gap-10'>
+	<div className='max-w-5xl m-auto mt-4 flex flex-col gap-10'>
 		<div 
         	style={{ backgroundImage: `url("/images/landing-photo.png")`}}
 		className='bg-cover bg-center bg-accent h-[600px] rounded-3xl flex'>

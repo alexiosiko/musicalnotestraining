@@ -46,7 +46,7 @@ export default function Index() {
 	
 	
 	return (
-		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
 				<Reveal reveal={reveal} setReveal={setReveal} audios={audios} />
 				<p className="text-center">Bouzouki</p>

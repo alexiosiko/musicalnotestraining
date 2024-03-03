@@ -30,9 +30,12 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en" className="dark text-foreground bg-background">
-				<body className={inter.className}>
+				<body className={`${inter.className}`}>
 					<Nav />
-					{children}
+					<div className="p-4">
+
+						{children}
+					</div>
 				</body>
 				<Analytics />
 			</html>
