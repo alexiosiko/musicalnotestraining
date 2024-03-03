@@ -14,11 +14,7 @@ export default function Index() {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
-	const [audios, setAudios] = useState<Audio[]>();
-	
-	useEffect(() => {
-		setAudios(getNewAudios());
-	}, [])
+	const [audios, setAudios] = useState<Audio[]>([]);
 
 	useEffect(() => {
 		console.log("shuffling");
@@ -47,14 +43,11 @@ export default function Index() {
 		setAudios(getNewAudios());
 		setIsPlaying(false);
 	}
-
 	
-	if (!audios)
-		return;
 	return (
 		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<Reveal reveal={reveal} setReveal={setReveal} audio={audios} />
+				<Reveal reveal={reveal} setReveal={setReveal} audios={audios} />
 				<p className="text-center">Bouzouki</p>
 				<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 

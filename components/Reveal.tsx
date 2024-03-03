@@ -5,8 +5,8 @@ import { Button } from "./ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Audio } from "@/types/audio";
 
-export default function Reveal({ audio, reveal, setReveal }: { 
-	audio: Audio[],
+export default function Reveal({ audios, reveal, setReveal }: { 
+	audios: Audio[] | undefined,
 	reveal: boolean,
 	setReveal: Dispatch<SetStateAction<boolean>>,
 }) {
@@ -14,7 +14,7 @@ export default function Reveal({ audio, reveal, setReveal }: {
 		setReveal(!reveal);
 	}
 	function getNote() {
-		const note: string[] = audio.map((audio: any) => {
+		const note: string[] | undefined = audios?.map((audio: any) => {
 			let str = audio.howl._src;
 			str = str.slice(str.length - 6, str.length - 4);
 			str = str.replace('/', '');
@@ -23,7 +23,7 @@ export default function Reveal({ audio, reveal, setReveal }: {
 		}
 		)
 		return <div>
-			{note.toString()}
+			{note?.toString()}
 		</div>
 	}
 	return (
