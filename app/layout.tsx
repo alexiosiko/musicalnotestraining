@@ -28,14 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 	return (
-		<ClerkProvider>
+		// <ClerkProvider>
 			<html lang="en" className="dark text-foreground bg-background">
 				<body className={inter.className}>
-					<Nav />
+					{/* <Nav /> */}
 					{children}
 				</body>
 				<Analytics />
 			</html>
-		</ClerkProvider>
+		// </ClerkProvider>
 	  );
 }
