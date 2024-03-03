@@ -16,8 +16,16 @@ export default function Index() {
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
 
+	function shuffle() {
+		if (audios == null) 
+			return;
+		killAudios();
+		setReveal(false);
+		setAudios(getNewAudios());
+		setIsPlaying(false);
+	}
+
 	useEffect(() => {
-		console.log("shuffling");
 		shuffle();
 	}, [noteCount, tempo])
 
@@ -35,14 +43,7 @@ export default function Index() {
 
 		return Array.from({ length: noteCount }, generateAudioWithDelay);
 	}
-	function shuffle() {
-		if (audios == null) 
-			return;
-		killAudios();
-		setReveal(false);
-		setAudios(getNewAudios());
-		setIsPlaying(false);
-	}
+	
 	
 	return (
 		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">

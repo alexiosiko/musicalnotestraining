@@ -17,7 +17,6 @@ export default function Play({ audios, isPlaying, setIsPlaying }: {
 			audios[i].howl.play();
 
 			const randomDelay = audios[i].delay;
-			console.log(audios[i].delay); // outputs 0.5
 
 			await new Promise((resolve) => setTimeout(resolve, randomDelay * 1000));
 		}
