@@ -5,10 +5,11 @@ import { Button } from "./ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Audio } from "@/types/audio";
 
-export default function Reveal({ audios, reveal, setReveal }: { 
+export default function Reveal({ audios, reveal, setReveal, src }: { 
 	audios: Audio[] | undefined,
 	reveal: boolean,
 	setReveal: Dispatch<SetStateAction<boolean>>,
+	src: string
 }) {
 	function onClick() {
 		setReveal(!reveal);
@@ -28,7 +29,7 @@ export default function Reveal({ audios, reveal, setReveal }: {
 	}
 	return (
 		<Button
-		style={{ backgroundImage: `url("/images/instruments/bouzouki-1.png")`}}
+		style={{ backgroundImage: src}}
 			onClick={onClick}
 			variant={'secondary'}
 			className="w-full h-[300px] aspect-square bg-cover bg-center flex m-auto text-5xl">

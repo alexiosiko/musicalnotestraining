@@ -1,6 +1,5 @@
 "use client"
 
-import { getRandomBouzoukiNote } from "@/lib/notes";
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import Play from "@/components/play";
@@ -9,7 +8,11 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 
-export default function Index() {
+export default function InstrumentPage({ src, getRandomNote, name }: { 
+	src: string,
+	getRandomNote: () => string,
+	name: string,
+}) {
 	const [tempo, setTempo] = useState<number>(0.7);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [noteCount, setNoteCount] = useState(3);
@@ -37,7 +40,7 @@ export default function Index() {
 
 		const generateAudioWithDelay = () => {
 			const delay = tempo === 0 ? generateRandomDelay() : tempo;
-			const howl = new Howl({ src: getRandomBouzoukiNote() });
+			const howl = new Howl({ src: getRandomNote() });
 			return new Audio(howl, delay);
 		};
 
@@ -48,8 +51,8 @@ export default function Index() {
 	return (
 		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<Reveal reveal={reveal} setReveal={setReveal} audios={audios} />
-				<p className="text-center">Guitar</p>
+				<Reveal src={src}  reveal={reveal} setReveal={setReveal} audios={audios} />
+				<p className="text-center">{name}</p>
 				<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
 				<div className="flex items-center justify-between">

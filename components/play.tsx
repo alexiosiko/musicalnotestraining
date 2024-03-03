@@ -2,6 +2,7 @@ import { Audio } from "@/types/audio";
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "./ui/button";
 import { CiPlay1 } from "react-icons/ci";
+import { Bars } from 'react-loader-spinner'
 
 export default function Play({ audios, isPlaying, setIsPlaying }: { 
 	audios: Audio[] | undefined,
@@ -29,8 +30,10 @@ export default function Play({ audios, isPlaying, setIsPlaying }: {
 			variant={"ghost"}
 
 			className="text-3xl">
-
-			<CiPlay1 className="text-3xl"/>
+			{isPlaying ?
+				<Bars width={30} /> :
+				<CiPlay1 className="text-3xl"/>
+			}
 		</Button>
 
 	)

@@ -16,7 +16,7 @@ export default function Index() {
 		<div className='flex gap-10 justify-center flex-wrap'>
 			{instruments.map((instrument, index) => 
 				<Instrument key={index} instrument={instrument} />
-				)}
+			)}
 		</div>
 		<div className='h-[300px]' />
 	</div>
