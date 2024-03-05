@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-	import { LuShuffle } from "react-icons/lu";
+import { LuShuffle } from "react-icons/lu";
 
 export default function Shuffle({ onShuffle, isPlaying }: { 
 	onShuffle:  () => void,
