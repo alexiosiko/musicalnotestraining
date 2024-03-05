@@ -8,15 +8,14 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 
-export default function page({ src, name }: { 
-	src: string,
+export default function page({ name }: { 
 	name: string,
 }) {
-	const [tempo, setTempo] = useState<number>(0.7);
-	const [isPlaying, setIsPlaying] = useState(false);
-	const [noteCount, setNoteCount] = useState(3);
-	const [reveal, setReveal] = useState(false);
-	const [audios, setAudios] = useState<Audio[]>([]);
+	const [tempo,		setTempo] = 	useState<number>(0.7);
+	const [isPlaying, 	setIsPlaying] = useState(false);
+	const [noteCount, 	setNoteCount] = useState(3);
+	const [reveal, 		setReveal] = 	useState(false);
+	const [audios, 		setAudios] = 	useState<Audio[]>([]);
 
 	function shuffle() {
 		if (audios == null) 
@@ -51,12 +50,10 @@ export default function page({ src, name }: {
 	return (
 		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<Reveal
-				src='url("/images/instruments/bouzouki-1.png"' 
-				reveal={reveal} setReveal={setReveal} audios={audios} />
+				<Reveal src='url("/images/instruments/bouzouki-1.png"' 
+					reveal={reveal} setReveal={setReveal} audios={audios} />
 				<p className="text-center">{name}</p>
 				<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
-
 				<div className="flex items-center justify-between">
 					<p className="max-sm:w-24">Note Count:</p>
 					<div className="w-4/6 flex items-center gap-2">

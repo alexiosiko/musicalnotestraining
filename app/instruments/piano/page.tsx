@@ -91,26 +91,21 @@ export default function page({ src, name }: {
 
 
 const notes = [
-	"/notes/piano/A.mp3",
-    "/notes/piano/As.mp3",
-    "/notes/piano/B.mp3",
-    "/notes/piano/C.mp3",
-    "/notes/piano/Cs.mp3",
-    "/notes/piano/D.mp3",
-    "/notes/piano/Ds.mp3",
-    "/notes/piano/E.mp3",
-    "/notes/piano/F.mp3",
-    "/notes/piano/Fs.mp3",
-    "/notes/piano/G.mp3",
-    "/notes/piano/Gs.mp3",
+	"/notes/piano/A3.mp3",
+    "/notes/piano/As3.mp3",
+    "/notes/piano/B3.mp3",
+    "/notes/piano/C3.mp3",
+    "/notes/piano/Cs3.mp3",
+    "/notes/piano/D3.mp3",
+    "/notes/piano/Ds3.mp3",
+    "/notes/piano/E3.mp3",
+    "/notes/piano/F3.mp3",
+    "/notes/piano/Fs3.mp3",
+    "/notes/piano/G3.mp3",
+    "/notes/piano/Gs3.mp3",
 ]
 
 function getRandomNotes() {
-	const randomIndex = Math.floor(Math.random() * notes.length);
-	return notes[randomIndex];
-}
-
-function getRandomPianoNote() {
 	const randomIndex = Math.floor(Math.random() * notes.length);
 	return notes[randomIndex];
 }
