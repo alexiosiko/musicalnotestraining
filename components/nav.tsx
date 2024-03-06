@@ -16,7 +16,7 @@ export default async function Nav() {
 				{user ?
 					<UserButton afterSignOutUrl="/" /> 
 					:
-					<SignInButton />
+					<SignInButton afterSignInUrl="/" />
 				}
 			</div>
 		</div>		
