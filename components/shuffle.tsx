@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { LuShuffle } from "react-icons/lu";
 
-export default function Shuffle({ onShuffle, isPlaying }: { 
-	onShuffle:  () => void,
+export default function Shuffle({ shuffle, isPlaying }: { 
+	shuffle:  () => void,
 	isPlaying: boolean,
 }) {
 	
@@ -12,7 +12,7 @@ export default function Shuffle({ onShuffle, isPlaying }: {
 			variant={"ghost"}
 			disabled={isPlaying}
 			className="text-3xl"
-			onClick={onShuffle}>
+			onClick={shuffle}>
 				<LuShuffle />
 		</Button>
 		

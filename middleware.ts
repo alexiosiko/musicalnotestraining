@@ -2,23 +2,10 @@ import { authMiddleware } from "@clerk/nextjs";
  
 export default authMiddleware({
   // Routes that can be accessed while signed out
-  publicRoutes: ['/', '/plans', 
-  '/instruments/bouzouki',
-  '/instruments/piano',
-  '/instruments/flute',
-  '/instruments/guitar',
-  '/instruments/violin',
-],
+  publicRoutes: ['/', '/plans'],
   // Routes that can always be accessed, and have
   // no authentication information
-  ignoredRoutes: ['/no-auth-in-this-route',
-  '/', '/plans', 
-  '/instruments/bouzouki',
-  '/instruments/piano',
-  '/instruments/flute',
-  '/instruments/guitar',
-  '/instruments/violin',
-],
+  ignoredRoutes: ['/no-auth-in-this-route'],
 });
  
 export const config = {

@@ -14,6 +14,7 @@ export default function Reveal({ audios, reveal, setReveal, src }: {
 	function onClick() {
 		setReveal(!reveal);
 	}
+	console.log(src);
 	function getNote() {
 		const note: string[] | undefined = audios?.map((audio: any) => {
 			let str = audio.howl._src;
