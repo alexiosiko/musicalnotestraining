@@ -1,8 +1,10 @@
 import Instrument from '@/components/instruments/instrument'
 import { instruments } from '@/components/instruments/instruments'
+import usersdb from '@/lib/mongodb'
 import React from 'react'
 
-export default function Index() {
+export default async function Index() {
+
   return (
 	<div className='max-w-5xl m-auto mt-4 flex flex-col gap-10'>
 		<div 

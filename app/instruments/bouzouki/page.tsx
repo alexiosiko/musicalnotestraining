@@ -7,16 +7,20 @@ import { Howl } from 'howler';
 import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
-import Shuffle from "@/components/shuffle";
+import { currentUser } from "@clerk/nextjs";
 
 export default function InstrumentPage() {
+
 	const [tempo, setTempo] = useState<number>(0.7);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
 
+
 	function shuffle() {
+
+		
 		if (audios == null) 
 			return;
 		setIsPlaying(true);
