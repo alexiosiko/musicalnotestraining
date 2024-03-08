@@ -11,7 +11,7 @@ export default function Instrument({ instrument, className } : {
 }) {
 	return (
 		<Link
-		href={instrument.href}
+			href={instrument.href}
 			className={`${className} hover:scale-105 hover:rsor-pointer transition`}
 			>
 			<Image src={instrument.src} alt={instrument.src} width={250} height={250} />

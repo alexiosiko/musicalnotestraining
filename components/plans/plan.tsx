@@ -21,7 +21,7 @@ export default function Plan({ data }: {
 				<Button size={'sm'}>Select</Button>
 				<div className="flex flex-col gap-2 text-xl">
 					<div className="flex gap-1 items-center">
-						{data.f1 ? <GoCheck /> : <GoX /> }<Text >asd</Text>
+						{data.f1 ? <GoCheck /> : <GoX /> }<Text >Unlimited Plays</Text>
 					</div>
 					<div className="flex gap-1 items-center">
 						{data.f2 ? <GoCheck /> : <GoX /> }<Text >asd</Text>

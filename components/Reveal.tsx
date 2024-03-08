@@ -1,33 +1,21 @@
 "use client"
 
-import { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { Button } from "./ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Audio } from "@/types/audio";
 
-export default function Reveal({ audios, reveal, setReveal, src }: { 
+export default function Reveal({ audios, reveal, setReveal, src, getNotes }: { 
 	audios: Audio[] | undefined,
 	reveal: boolean,
 	setReveal: Dispatch<SetStateAction<boolean>>,
-	src: string
+	src: string,
+	getNotes: () => JSX.Element
 }) {
 	function onClick() {
 		setReveal(!reveal);
 	}
-	console.log(src);
-	function getNote() {
-		const note: string[] | undefined = audios?.map((audio: any) => {
-			let str = audio.howl._src;
-			str = str.slice(str.length - 6, str.length - 4);
-			str = str.replace('/', '');
-			str = str.replace('s', '#');
-			return  " " + str;
-		}
-		)
-		return <div>
-			{note?.toString()}
-		</div>
-	}
+	
 	return (
 		<Button
 		style={{ backgroundImage: src}}
@@ -36,7 +24,7 @@ export default function Reveal({ audios, reveal, setReveal, src }: {
 			className="w-full h-[300px] aspect-square bg-cover bg-center flex m-auto text-5xl">
 				{reveal ?
 					<div style={{ textShadow: '2px 2px black'}}>
-						{getNote()}
+						{getNotes()}
 					</div> 
 					: 
 					<div>

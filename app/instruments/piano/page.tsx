@@ -23,6 +23,7 @@ export default function InstrumentPage() {
 		setAudios(getNewAudios());
 		setIsPlaying(false);
 	}
+
 	useEffect(() => {
 		shuffle();
 	}, [noteCount, tempo])
@@ -42,10 +43,24 @@ export default function InstrumentPage() {
 		return Array.from({ length: noteCount }, generateAudioWithDelay);
 	}
 
+	function getNotes() {
+		const note: string[] | undefined = audios?.map((audio: any) => {
+			let str = audio.howl._src;
+			str = str.slice(str.length - 7, str.length - 4);
+			str = str.replace('/', '');
+			str = str.replace('s', '#');
+			return  " " + str;
+		}
+		)
+		return <div>
+			{note?.toString()}
+		</div>
+	}
+
 	return (
-		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className="max-w-5xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<Reveal src="url('/images/instruments/piano-1.jpg')"  reveal={reveal} setReveal={setReveal} audios={audios} />
+				<Reveal src="url('/images/instruments/piano-1.jpg')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
 				<p className="text-center">Piano</p>
 				<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
@@ -82,6 +97,7 @@ export default function InstrumentPage() {
 }
 
 
+
 const notes = [
 	"/notes/piano/A3.mp3",
     "/notes/piano/As3.mp3",
@@ -96,6 +112,8 @@ const notes = [
     "/notes/piano/G3.mp3",
     "/notes/piano/Gs3.mp3",
 ]
+
+
 
 function getRandomNote() {
 	const randomIndex = Math.floor(Math.random() * notes.length);

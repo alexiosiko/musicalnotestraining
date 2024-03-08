@@ -27,7 +27,7 @@ export default function InstrumentPage() {
 
 	useEffect(() => {
 		shuffle();
-	}, [])
+	}, [noteCount, tempo])
 
 	function getNewAudios(): Audio[] {
 		const generateRandomDelay = () => (Math.random() * (750 - 200) + 200) / 1000;
@@ -40,20 +40,35 @@ export default function InstrumentPage() {
 
 		return Array.from({ length: noteCount }, generateAudioWithDelay);
 	}
+
+	function getNotes() {
+		const note: string[] | undefined = audios?.map((audio: any) => {
+			let str = audio.howl._src;
+			str = str.slice(str.length - 6, str.length - 4);
+			str = str.replace('/', '');
+			str = str.replace('s', '#');
+			return  " " + str;
+		}
+		)
+		return <div>
+			{note?.toString()}
+		</div>
+	}
 	
 	
 	return (
-		<main className="max-w-5xl text-2xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className="max-w-5xl  ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<Reveal src="url('/images/instruments/bouzouki-1.png')"  reveal={reveal} setReveal={setReveal} audios={audios} />
+				<Reveal src="url('/images/instruments/bouzouki-1.png')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
 				<p className="text-center">Bouzouki</p>
 				<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
-				<Shuffle isPlaying={isPlaying} shuffle={shuffle} />
+
 				<div className="flex items-center justify-between">
 					<p className="max-sm:w-24">Note Count:</p>
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider 
-							className="w-full"
+						className="w-full"
+						disabled={isPlaying}
 							min={1} max={5} 
 							defaultValue={[3]} 
 							onValueChange={(value) => setNoteCount(value[0])} 
@@ -67,6 +82,7 @@ export default function InstrumentPage() {
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider
 							className="w-full"
+							disabled={isPlaying}
 							min={0} max={10}
 							defaultValue={[7]}
 							onValueChange={(value) => setTempo(value[0]/10)} 
