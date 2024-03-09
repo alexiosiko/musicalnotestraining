@@ -7,42 +7,40 @@ import { Howl } from 'howler';
 import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
-import { currentUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { getCredits, setUser } from "@/lib/userapi";
 
 export default function InstrumentPage() {
-
+	const clerkUser = useUser();
 	const [tempo, setTempo] = useState<number>(0.7);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
+	const [credits, setCredits] = useState<number>(0);
 
-
-	function shuffle() {
-
-		
-		if (audios == null) 
+	useEffect(() => {
+		if (!clerkUser.user)
 			return;
-		setIsPlaying(true);
-		setReveal(false);
-		setAudios(getNewAudios());
-		setIsPlaying(false);
-	}
+		
+		// Make sure user exists, if not, create
+		setUser(clerkUser.user.id);
+
+		// Update credits once
+		getCredits(clerkUser.user.id).then(credits => setCredits(credits));
+	}, [clerkUser?.user]);
 
 	useEffect(() => {
 		shuffle();
 	}, [noteCount, tempo])
 
-	function getNewAudios(): Audio[] {
-		const generateRandomDelay = () => (Math.random() * (750 - 200) + 200) / 1000;
-
-		const generateAudioWithDelay = () => {
-			const delay = tempo === 0 ? generateRandomDelay() : tempo;
-			const howl = new Howl({ src: getRandomNote() });
-			return new Audio(howl, delay);
-		};
-
-		return Array.from({ length: noteCount }, generateAudioWithDelay);
+	function shuffle() {
+		if (audios == null) 
+			return;
+		setIsPlaying(true);
+		setReveal(false);
+		setIsPlaying(false);
+		setAudios(getNewAudios(tempo, noteCount));
 	}
 
 	function getNotes() {
@@ -59,14 +57,13 @@ export default function InstrumentPage() {
 		</div>
 	}
 	
-	
 	return (
-		<main className="max-w-5xl  ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className="max-w-5xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<Reveal src="url('/images/instruments/bouzouki-1.png')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
 				<p className="text-center">Bouzouki</p>
-				<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
-
+				<Reveal src="url('/images/instruments/piano-1.jpg')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
+				<p className="text-center">Credits: {credits}</p>
+				<Play credits={credits} setCredits={setCredits} id={clerkUser.user?.id} audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 				<div className="flex items-center justify-between">
 					<p className="max-sm:w-24">Note Count:</p>
 					<div className="w-4/6 flex items-center gap-2">
@@ -85,7 +82,7 @@ export default function InstrumentPage() {
 					<p className="w-24">Tempo:</p>
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider
-							className="w-full"
+						className="w-full"
 							disabled={isPlaying}
 							min={0} max={10}
 							defaultValue={[7]}
@@ -118,4 +115,14 @@ const notes = [
 function getRandomNote() {
 	const randomIndex = Math.floor(Math.random() * notes.length);
 	return notes[randomIndex];
+}function getNewAudios(tempo: number, noteCount: number): Audio[] {
+	const generateRandomDelay = () => (Math.random() * (750 - 200) + 200) / 1000;
+
+	const generateAudioWithDelay = () => {
+		const delay = tempo === 0 ? generateRandomDelay() : tempo;
+		const howl = new Howl({ src: getRandomNote() });
+		return new Audio(howl, delay);
+	};
+
+	return Array.from({ length: noteCount }, generateAudioWithDelay);
 }

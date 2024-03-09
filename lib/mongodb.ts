@@ -11,6 +11,6 @@ let client = new MongoClient(URI, options);
 let dbPromise = client.connect().then(client =>
 	client.db("MusicalNotesTraining")
 );
-let usersdb = dbPromise.then(res => res.collection('users'))
+let usersDbPromise = dbPromise.then(res => res.collection('users'))
 
-export default usersdb;
+export default usersDbPromise;

@@ -1,6 +1,5 @@
 import Instrument from '@/components/instruments/instrument'
 import { instruments } from '@/components/instruments/instruments'
-import usersdb from '@/lib/mongodb'
 import React from 'react'
 
 export default async function Index() {

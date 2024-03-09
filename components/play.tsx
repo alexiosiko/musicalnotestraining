@@ -3,15 +3,34 @@ import { Dispatch, SetStateAction } from "react";
 import { Button } from "./ui/button";
 import { CiPlay1 } from "react-icons/ci";
 import { Bars } from 'react-loader-spinner'
+import { getCredits, updateCredits } from "@/lib/userapi";
 
-export default function Play({ audios, isPlaying, setIsPlaying }: { 
+export default function Play({ audios, isPlaying, setIsPlaying, id, setCredits, credits }: { 
 	audios: Audio[] | undefined,
 	isPlaying: boolean,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>,
+	id: string | undefined,
+	setCredits: Dispatch<SetStateAction<number>>,
+	credits: number
 }) {
+	async function minusCredits() {
+		if (id == null) {
+			console.log("Could not get user id");
+			return;
+		}
+		await updateCredits(id, -1);
+		setCredits(await getCredits(id))
+	}
 	async function onPlay() {
+		minusCredits();
+
 		if (audios == undefined || audios == null)
 			return;
+		if (id == undefined) {
+			console.error("Error getting user id");
+			return;
+		}
+
 		setIsPlaying(true);
 
 		for (let i = 0; i < audios.length; i++) {
@@ -25,14 +44,17 @@ export default function Play({ audios, isPlaying, setIsPlaying }: {
 	}
 	return (
 		<Button
-			disabled={isPlaying}
+			disabled={isPlaying && credits > 0}
 			onClick={onPlay}		
 			variant={"ghost"}
 
 			className="text-3xl">
 			{isPlaying ?
 				<Bars width={30} /> :
-				<CiPlay1 className="text-3xl"/>
+				<>
+				<CiPlay1 className="text-3xl relative "/>
+					<p className=" absolute translate-x-[70%] text-sm text-secondary">Costs 1 credits</p>
+				</>
 			}
 		</Button>
 
