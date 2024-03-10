@@ -14,7 +14,7 @@ export default function Plans() {
   return (
 	<div className='m-auto mt-12 gap-12 flex flex-col'>
 		<p className='text-center'>Buy More Credits!</p>
-		<div className='flex gap-4 justify-center'>
+		<div className='flex flex-wrap gap-4 justify-center'>
 			{plans.map((plan, index: number) => 
 				<Plan data={plan} key={index} />
 			)}
