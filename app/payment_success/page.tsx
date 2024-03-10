@@ -4,7 +4,7 @@
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 
-export default function page() {
+export default function Page() {
 	const searchParams = useSearchParams()
 	useEffect(() => {
 		console.log("run");
