@@ -7,11 +7,11 @@ import { buffer } from 'micro';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 // Stripe requires the raw body to construct the event.
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export async function POST(req: Request) {
 	const body = await req.text()
