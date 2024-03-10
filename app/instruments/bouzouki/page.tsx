@@ -8,7 +8,7 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
-import { getCredits, setUser } from "@/lib/userapi";
+import { getCredits, setUser } from "@/app/api/mongodb/userapi";
 
 export default function InstrumentPage() {
 	const clerkUser = useUser();
@@ -58,7 +58,7 @@ export default function InstrumentPage() {
 	}
 	
 	return (
-		<main className="max-w-5xl ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className="ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
 				<p className="text-center">Bouzouki</p>
 				<Reveal src="url('/images/instruments/bouzouki-1.png')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />

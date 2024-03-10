@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Button } from "./ui/button";
 import { CiPlay1 } from "react-icons/ci";
 import { Bars } from 'react-loader-spinner'
-import { getCredits, updateCredits } from "@/lib/userapi";
+import { getCredits, addCredits } from "@/app/api/mongodb/userapi";
 
 export default function Play({ audios, isPlaying, setIsPlaying, id, setCredits, credits }: { 
 	audios: Audio[] | undefined,
@@ -18,7 +18,7 @@ export default function Play({ audios, isPlaying, setIsPlaying, id, setCredits, 
 			console.log("Could not get user id");
 			return;
 		}
-		await updateCredits(id, -1);
+		await addCredits(id, -1);
 		setCredits(await getCredits(id))
 	}
 	async function onPlay() {

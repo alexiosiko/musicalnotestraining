@@ -15,7 +15,6 @@ export default function Reveal({ audios, reveal, setReveal, src, getNotes }: {
 	function onClick() {
 		setReveal(!reveal);
 	}
-	
 	return (
 		<Button
 		style={{ backgroundImage: src}}
@@ -23,7 +22,7 @@ export default function Reveal({ audios, reveal, setReveal, src, getNotes }: {
 			variant={'secondary'}
 			className="w-full h-[300px] aspect-square bg-cover bg-center flex m-auto text-5xl">
 				{reveal ?
-					<div style={{ textShadow: '2px 2px black'}}>
+					<div style={{ textShadow: '2px 2px black'}} className="text-background">
 						{getNotes()}
 					</div> 
 					: 

@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/instruments/bouzouki/page.tsx", "app/page.js", "components/audiovisualizer.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/instruments/bouzouki/page.tsx", "app/page.js", "components/audiovisualizer.tsx", "api/checkout_sessions.js"],
   "exclude": ["node_modules"]
 }

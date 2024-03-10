@@ -8,12 +8,16 @@ export type User = {
 	credits: number,
 }
 
-export async function getUser(objectId: ObjectId): Promise<User> {
+export async function handlePaymentSuccess(checkout_session_id: string, userId: string): Promise<boolean> {
+	return false;
+}
+
+export async function getUser(id: string): Promise<User | null> {
 	const db = await usersDbPromise;
 	const user = db.findOne({
-		objectId: objectId
+		id: id
 	})
-	return user as unknown as User;
+	return user as unknown as User | null;
 }
 
 export async function setUser(id: string) {
@@ -26,7 +30,7 @@ export async function setUser(id: string) {
 	);
   }
 
-export async function updateCredits(id: string, credits: number): Promise<boolean> {
+export async function addCredits(id: string, credits: number): Promise<boolean> {
 	console.log("updateCredits()");
 	const db = await usersDbPromise;
 	const user = await db.findOne({ id: id });
