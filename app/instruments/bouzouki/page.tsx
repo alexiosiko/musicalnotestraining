@@ -9,6 +9,7 @@ import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
 import { getCredits, setUser } from "@/app/api/mongodb/userapi";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function InstrumentPage() {
 	const clerkUser = useUser();
@@ -48,8 +49,7 @@ export default function InstrumentPage() {
 			str = str.replace('/', '');
 			str = str.replace('s', '#');
 			return  " " + str;
-		}
-		)
+		})
 		return <div>
 			{note?.toString()}
 		</div>
@@ -60,7 +60,16 @@ export default function InstrumentPage() {
 			<div className="flex flex-col gap-4 mt-4">
 				<p className="text-center">Bouzouki</p>
 				<Reveal src="url('/images/instruments/bouzouki-1.png')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
-				<p className="text-center">Credits: {credits}</p>
+				<div className="flex items-center justify-center">
+					<p className="text-center">Credits:</p>
+					{credits == 0 ? 
+						<ThreeDots height={30} width={30} wrapperClass="ml-4" /> 
+						:
+						<p> 
+							{credits}
+						</p>
+					}
+				</div>
 				<Play credits={credits} setCredits={setCredits} id={clerkUser.user?.id} audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 				<div className="flex items-center justify-between">
 					<p className="max-sm:w-24">Note Count:</p>

@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 	const body = await req.text()
     const signature = req.headers.get('stripe-signature') as string;
 	const bodyObject = await JSON.parse(body);
-	const userId = bodyObject.data.object.client_reference_id as string;
+	let userId = bodyObject.data.object.client_reference_id as string;
 
 	let event;
     try {
@@ -42,25 +42,33 @@ export async function POST(req: Request) {
 	  return new NextResponse(JSON.stringify({ header: "Something went wrong :(", description: "Error validating a valid payment" }), { status: 400 });  
     }
 	if (userId && event.type) {
-		// Successfull payment
-		const object: any = event.data.object;
-		const paymentLink = object.payment_link
-		const userId = object.client_reference_id;
+		switch (event.type) {
+			case 'payment_intent.succeeded':
+			 		// Successfull payment
+				const object: any = event.data.object;
+				const paymentLink = object.payment_link
+				userId = object.client_reference_id as string;
 
-		// Get credits based on paymentLink
-		let credits = creditMapping[paymentLink] || 0;
+				// Get credits based on paymentLink
+				let credits = creditMapping[paymentLink] || 0;
 
-		addCredits(userId, credits).then(res => {
-			if (res == true) {
-				console.log(`Successfully added ${credits} credits to mongodb user: ${userId}`)
-			} else {
-				console.error(`Error, could not add ${credits} credits to mongodb user: ${userId}`)
-			}
-		}).catch(err => {
-			console.error(err);
-			return new NextResponse(JSON.stringify({ header: "Error :(", description: `Something went wrong with our database :(` }), { status: 500 });  
-		})
-		return new NextResponse(JSON.stringify({ header: "Success! :D", description: `Successfully added ${credits} credits to your account!` }), { status: 200 });  
+				addCredits(userId, credits).then(res => {
+					if (res == true) {
+						console.log(`Successfully added ${credits} credits to mongodb user: ${userId}`)
+					} else {
+						console.error(`Error, could not add ${credits} credits to mongodb user: ${userId}`)
+					}
+				}).catch(err => {
+					console.error(err);
+					return new NextResponse(JSON.stringify({ header: "Error :(", description: `Something went wrong with our database :(` }), { status: 500 });  
+				})
+			// ... handle other event types
+			default:
+			  console.log(`Unhandled event type ${event.type}`);
+		  }
+
+		
+		return new NextResponse(JSON.stringify({ header: "Success! :D", description: `Successfully added credits to your account!` }), { status: 200 });  
 		
 	}
 
