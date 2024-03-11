@@ -7,17 +7,17 @@ export default async function Nav() {
 	return (
 		<div className="p-4 flex outline outline-1 justify-between items-center w-full">
 			<Link href="/">
-				Musical Notes
+				Musical Notes Training
 			</Link>
 			<div className="flex gap-6 relative items-center ">
-				<Button className="p-4">
-					<Link href="/plans" >Plans</Link>
-				</Button>
 				{user ?
 					<UserButton afterSignOutUrl="/" /> 
 					:
 					<SignInButton afterSignInUrl="/" />
 				}
+				<Button className="p-4">
+					<Link href="/plans" >Plans</Link>
+				</Button>
 			</div>
 		</div>		
 	);

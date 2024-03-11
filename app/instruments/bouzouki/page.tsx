@@ -21,11 +21,9 @@ export default function InstrumentPage() {
 
 	useEffect(() => {
 		if (!clerkUser.user)
-			return;
-		
+			return;		
 		// Make sure user exists, if not, create
 		setUser(clerkUser.user.id);
-
 		// Update credits once
 		getCredits(clerkUser.user.id).then(credits => setCredits(credits));
 	}, [clerkUser?.user]);

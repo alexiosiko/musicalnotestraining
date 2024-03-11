@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import Text from "../ui/text";
 import { useUser } from "@clerk/nextjs";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 
 // const asyncStripe = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY as string);
 
@@ -22,13 +23,17 @@ export default function Plan({ data }: {
 		window.location.href = url;
 	}
 	return (
-		<div className="rounded-[10px] bg-accent pl-6 pr-6 p-4 w-[404px] text-center flex flex-col gap-3">
-			<Text className="text-xl font-bold">{data.header}</Text>
-			<p className="text-5xl mt-12">{data.credits}<span className="text-accent-foreground text-sm">credits</span></p>
-			<p className="text-xl  mb-12">${data.price}</p>
-			<a onClick={handleClick}>
-				<Button size={'sm'} className="w-full">Buy</Button>
-			</a>
-		</div>
+		<Card className="w-[220px] text-center">
+			<CardHeader>{data.header}</CardHeader>
+			<CardContent className="mt-4 mb-4">
+				<p className="text-4xl m-4">${data.price}</p>
+				<p className="text-xl">{data.credits}<span className="text-accent-foreground text-sm">credits</span></p>
+			</CardContent>
+			<CardFooter>
+				<a className="w-full" onClick={handleClick}>
+					<Button size={'sm'} className="w-full">Buy</Button>
+				</a>
+			</CardFooter>
+		</Card>
   );
 }

@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<ClerkProvider>
-			<html lang="en" className="text-foreground bg-background">
+			<html lang="en" className="dark text-foreground bg-background">
 				<body className={`${inter.className}`}>
 					<Nav />
 					<div className="p-4 max-w-4xl m-auto">

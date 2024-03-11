@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import rawBody from 'raw-body';
 import { NextApiRequest } from 'next';
 import { buffer } from 'micro';
+import { addCredits } from '../mongodb/userapi';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -13,11 +14,22 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 //   },
 // };
 
+// payment links
+const PaymentLink = {
+	basic: "plink_1OsX0qJWOxm8lyxDV2uTdCgR",
+}
+
+const creditMapping: Record<string, number> = {
+	[PaymentLink.basic]: 50,
+};
+
 export async function POST(req: Request) {
 	const body = await req.text()
     const signature = req.headers.get('stripe-signature') as string;
+	const bodyObject = await JSON.parse(body);
+	const userId = bodyObject.data.object.client_reference_id as string;
 
-    let event;
+	let event;
     try {
       event = stripe.webhooks.constructEvent(
 		body,
@@ -27,26 +39,34 @@ export async function POST(req: Request) {
     } catch (err: any) {
       // On error, log and return the error message.
       console.log(`❌ Error message: ${err.message}`);
-	  return new NextResponse(JSON.stringify({ ok: false }), { status: 400 });  
+	  return new NextResponse(JSON.stringify({ header: "Something went wrong :(", description: "Error validating a valid payment" }), { status: 400 });  
     }
+	if (userId && event.type) {
+		// Successfull payment
+		const object: any = event.data.object;
+		const paymentLink = object.payment_link
+		const userId = object.client_reference_id;
 
-    switch (event.type) {
-		case 'payment_intent.payment_failed': {
-			const paymentIntent = event.data.object;
-			console.log(
-			`❌ Payment failed: ${paymentIntent.last_payment_error?.message}`
-			);
-			break;
-		}
-		case 'charge.succeeded': {
-			const charge = event.data.object;
-			console.log(`Charge id: ${charge.id}`);
-			break;
-		}
-    }
+		// Get credits based on paymentLink
+		let credits = creditMapping[paymentLink] || 0;
+
+		addCredits(userId, credits).then(res => {
+			if (res == true) {
+				console.log(`Successfully added ${credits} credits to mongodb user: ${userId}`)
+			} else {
+				console.error(`Error, could not add ${credits} credits to mongodb user: ${userId}`)
+			}
+		}).catch(err => {
+			console.error(err);
+			return new NextResponse(JSON.stringify({ header: "Error :(", description: `Something went wrong with our database :(` }), { status: 500 });  
+		})
+		return new NextResponse(JSON.stringify({ header: "Success! :D", description: `Successfully added ${credits} credits to your account!` }), { status: 200 });  
+		
+	}
 
     // Return a response to acknowledge receipt of the event.
-	return new NextResponse(JSON.stringify({ ok: true }), { status: 200 });  
+	return new NextResponse(JSON.stringify({}), { status: 200 });  
+
 };
 
 function streamToBuffer(arg0: any) {
