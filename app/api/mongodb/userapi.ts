@@ -25,7 +25,7 @@ export async function setUser(id: string) {
 	const db = await usersDbPromise;
 	const result = await db.updateOne(
 	  { id: id },
-	  { $setOnInsert: { id: id, credits: 2500 } },
+	  { $setOnInsert: { id: id, credits: 25 } },
 	  { upsert: true }
 	);
   }

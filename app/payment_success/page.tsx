@@ -1,26 +1,24 @@
 "use client"
 
+import { Button } from '@/components/ui/button';
+import { CardDescription, CardHeader } from '@/components/ui/card';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import stripe from 'stripe';
 
 export default function Page() {
 	const searchParams = useSearchParams();
-	const [invoice, setInvoice] = useState();
-	const [checkout_session_id, setCheckout_session_id] = useState("");
-	async function createReceipt() {
-
-	}
-	useEffect(() => {
-		createReceipt();
-	}, [checkout_session_id])
-	console.log("running");
-	console.log('Invoice created:', invoice);
-
-	
 	
   return (
-	<div>
+	<div className='flex flex-col items-center'>
+		<CardHeader>Success!</CardHeader>
+		<CardDescription className='text-center'>🎉 We are thrilled to be part of your musical journey. Enjoy every
+        moment of your training, and remember, the world is waiting to hear
+        your beautiful melodies!</CardDescription>
+		<Link href="/" className='mt-24'>
+			<Button>
+				Return to home
+			</Button>
+		</Link>
 		{searchParams.get('checkout_session_id')}
 	</div>
   )
