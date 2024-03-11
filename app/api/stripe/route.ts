@@ -67,13 +67,11 @@ export async function POST(req: Request) {
 			  console.log(`Unhandled event type ${event.type}`);
 		  }
 
-		
-		return new NextResponse(JSON.stringify({ header: "Success! :D", description: `Successfully added credits to your account!` }), { status: 200 });  
-		
+			
 	}
 
     // Return a response to acknowledge receipt of the event.
-	return new NextResponse(JSON.stringify({}), { status: 200 });  
+	return new NextResponse(JSON.stringify({ received: true }), { status: 200 });  
 
 };
 
