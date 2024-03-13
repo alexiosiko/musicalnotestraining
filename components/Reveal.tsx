@@ -20,7 +20,7 @@ export default function Reveal({ audios, reveal, setReveal, src, getNotes }: {
 		style={{ backgroundImage: src}}
 			onClick={onClick}
 			variant={'secondary'}
-			className="w-full h-[300px] aspect-square bg-cover bg-center flex m-auto text-4xl">
+			className="w-full h-[300px] aspect-square bg-cover text-background bg-center flex m-auto text-4xl">
 				{reveal ?
 					<div style={{ textShadow: '2px 2px black'}} className="">
 						{getNotes()}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CardDescription, CardHeader } from "../ui/card";
 
 export default function Instrument({ instrument, className } : {
 	instrument:  {
@@ -15,7 +16,7 @@ export default function Instrument({ instrument, className } : {
 			className={`${className} hover:scale-105 hover:rsor-pointer transition`}
 			>
 			<Image src={instrument.src} alt={instrument.src} width={250} height={250} />
-			<h2 className="text-center mt-1">{instrument.name}</h2>
+			<CardHeader className="text-center mt-1">{instrument.name}</CardHeader>
 		</Link>
 	)
 }

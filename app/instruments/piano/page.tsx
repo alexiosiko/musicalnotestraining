@@ -8,7 +8,7 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
-import { getCredits, setUser } from "@/app/api/mongodb/userapi";
+import { getCredits, verifyUser } from "@/app/api/mongodb/userapi";
 
 export default function InstrumentPage() {
 	const clerkUser = useUser();
@@ -24,7 +24,7 @@ export default function InstrumentPage() {
 			return;
 		
 		// Insert user once
-		setUser(clerkUser.user.id);
+		verifyUser(clerkUser.user.id);
 
 		// Update credits once
 		getCredits(clerkUser.user.id).then(credits => setCredits(credits));

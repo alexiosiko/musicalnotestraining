@@ -5,7 +5,7 @@ export default authMiddleware({
 	publicRoutes: ['/'],
 	// Routes that can always be accessed, and have
 	// no authentication information
-	ignoredRoutes: ['/api/stripe' ,'payment_success'],
+	ignoredRoutes: ['/api/stripe/webhook' ,'payment_success', '/create-portal-session'],
 });
  
 export const config = {

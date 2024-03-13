@@ -44,7 +44,7 @@ export default function Play({ audios, isPlaying, setIsPlaying, id, setCredits, 
 	}
 	return (
 		<Button
-			disabled={isPlaying && credits > 0}
+			disabled={isPlaying || credits <= 0}
 			onClick={onPlay}		
 			variant={"ghost"}
 
