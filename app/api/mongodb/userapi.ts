@@ -62,7 +62,10 @@ export async function getCustomerId(userId: string): Promise<string | null> {
 	try {
 		const db = await usersDbPromise;
 		const user = await db.findOne({ userId: userId });
-		return user?.customerId;
+		if (user)
+			return user.customerId;
+		else 
+			return "";
 
 	} catch (e) {
 		console.error(e);
