@@ -25,7 +25,7 @@ export default function Plans() {
 		<div className='m-auto mt-12 gap-12 flex flex-col'>
 			<CardTitle>Buy More Credits!</CardTitle>
 			<div className='grid grid-cols-3 gap-4 justify-center'>
-				{customerId == undefined 
+				{customerId === undefined 
 					&& 
 					<div>
 						Fetching data ...
