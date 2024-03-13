@@ -1,8 +1,8 @@
-import React, { FormEvent, FormEventHandler, useEffect } from "react";
+import React, { FormEvent, FormEventHandler, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Text from "../ui/text";
 import { useUser } from "@clerk/nextjs";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "../ui/card";
 import { getCustomerId } from "@/app/api/mongodb/userapi";
 import type { UserResource } from '@clerk/types';
 
@@ -18,7 +18,6 @@ export default function Plan({ data, user, customerId }: {
   user: UserResource,
   customerId: string
 }) {
-
 	const userName = user.firstName ? user.firstName : "Empty";
 	return (
 		<form action="/api/stripe/create-checkout-session" method="POST" encType="application/json">
@@ -29,8 +28,8 @@ export default function Plan({ data, user, customerId }: {
 			<Card className="w-[220px] text-center">
 				<CardHeader>{data.header}</CardHeader>
 				<CardContent className="mt-4 mb-4">
-					<p className="text-4xl m-4">${data.price}</p>
-					<p className="text-xl">{data.credits}<span className="text-accent-foreground text-sm">credits</span></p>
+					<CardDescription className="text-4xl m-4">${data.price}</CardDescription>
+					<CardDescription className="text-xl">{data.credits}<span className="text-xs"> credits</span></CardDescription>
 				</CardContent>
 				<CardFooter>
 					<a className="w-full" >

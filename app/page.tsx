@@ -1,5 +1,5 @@
 import Instrument from '@/components/instruments/instrument'
-import { instruments } from '@/components/instruments/instruments'
+import { instruments } from '@/components/instruments/data'
 import { Button } from '@/components/ui/button'
 import { CardDescription, CardFooter, CardHeader, Card, CardTitle, CardContent } from '@/components/ui/card'
 import Image from 'next/image'
