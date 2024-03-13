@@ -1,41 +1,63 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+// Import necessary dependencies
+import React, { useEffect, useState } from 'react';
 import { plans } from "@/components/plans/data";
 import Plan from '@/components/plans/plan';
 import { getCustomerId, verifyUser } from '../api/mongodb/userapi';
 import { useUser } from '@clerk/nextjs';
-import { Button } from '@/components/ui/button';
-import { CardTitle } from '@/components/ui/card';
+import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ThreeDots } from 'react-loader-spinner';
+import { motion, Variants } from "framer-motion";
 
+// Define animation variants
+const planVariants: Variants = {
+	visible: { 
+		transition: {
+			staggerChildren: 0.1,
+		}
+	},
+};
+
+const planItemVariants: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function Plans() {
-	const clerkUser = useUser();
-	const [customerId, setCustomerId] = useState<string | undefined | null>(undefined);
-	useEffect(() => {
-		async function fetchData() {
-			if (clerkUser.user == undefined || clerkUser.user.id == undefined)
-				return;
-			setCustomerId(await getCustomerId(clerkUser.user.id));
-		}
-		fetchData();
-	}, [clerkUser.user?.id])
+  const clerkUser = useUser();
+  const [customerId, setCustomerId] = useState<string | undefined | null>(undefined);
 
-	return (
-		<div className='m-auto mt-12 gap-12 flex flex-col'>
-			<CardTitle>Buy More Credits!</CardTitle>
-			<div className='grid grid-cols-3 gap-4 justify-center'>
-				{customerId === undefined 
-					&&
-					<div>
-						<ThreeDots height={20} width={40} />
-					</div>
-				} 
-				{clerkUser.user && customerId !== undefined && customerId !== null && plans.map((plan, index: number) => 
-					<Plan customerId={customerId} user={clerkUser.user} data={plan} key={index} />
-				)}
-			</div>
+  useEffect(() => {
+    async function fetchData() {
+      if (clerkUser.user == undefined || clerkUser.user.id == undefined)
+        return;
+      setCustomerId(await getCustomerId(clerkUser.user.id));
+    }
+    fetchData();
+  }, [clerkUser.user?.id]);
+
+  return (
+    <div className='m-auto mt-12 gap-12 flex flex-col'>
+		<CardTitle>Buy More Credits!</CardTitle>
+		<div>
+			{customerId === undefined && (
+			<motion.div className='flex gap-2'>
+				<CardDescription>Fetching data </CardDescription>
+				<ThreeDots height={20} width={40} />
+			</motion.div>
+			)}
+			
+			{clerkUser.user && customerId !== undefined && customerId !== null && (
+				<motion.div className='sm:grid grid-cols-3 items-center' variants={planVariants} initial="hidden" animate="visible">
+					{plans.map((plan, index: number) => (
+						<motion.div key={index} variants={planItemVariants}>
+							<Plan customerId={customerId} user={clerkUser.user} data={plan} />
+						</motion.div>
+					))}
+				</motion.div>
+			)}
 		</div>
-	)
+    </div>
+  );
 }
