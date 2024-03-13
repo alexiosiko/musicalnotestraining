@@ -38,7 +38,7 @@ export default function RootLayout({
 					</div>
 				</div>
 				<footer className="text-xs text-muted-foreground text-center p-4">
-					Copyright © 2024 Cupid's Computer Shop, Inc
+					Copyright &copy; 2024 Cupid's Computer Shop, Inc
 				</footer>
 			</body>
 			<Analytics />
