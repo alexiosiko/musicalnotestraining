@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 
 export default function Index() {
   return (
-	<div className='m-auto mt-4 flex flex-col gap-10'>
+	<div className='m-auto mt-4 flex flex-col gap-10 overflow-hidden'>
 		<div className='sm:grid grid-cols-2 items-center gap-4'>
         <AnimatedDiv
 		direction='left'
