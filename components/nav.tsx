@@ -15,9 +15,11 @@ export default async function Nav() {
 					:
 					<SignInButton afterSignInUrl="/" />
 				}
-				<Button className="p-4">
-					<Link href="/plans" >Plans</Link>
-				</Button>
+				<Link href="/plans" >
+					<Button className="p-4">
+						Plans
+					</Button>
+				</Link>
 			</div>
 		</div>		
 	);

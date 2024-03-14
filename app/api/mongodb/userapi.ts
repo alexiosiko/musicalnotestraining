@@ -19,7 +19,7 @@ export async function getUser(userId: string): Promise<User | null> {
 }
 
 export async function verifyUser(userId: string) {
-	console.log("putUser()");
+	console.log("verifyUser()");
 	const db = await usersDbPromise;
 	const result = await db.updateOne(
 	  { userId: userId },
@@ -62,8 +62,9 @@ export async function getCustomerId(userId: string): Promise<string | null> {
 	try {
 		const db = await usersDbPromise;
 		const user = await db.findOne({ userId: userId });
-		if (user)
+		if (user) {
 			return user.customerId;
+		}
 		else 
 			return "";
 
@@ -77,11 +78,14 @@ export async function setCustomerId(userId: string, customerId: string): Promise
 	console.log("setCustomerId()");
 	try {
 		const db = await usersDbPromise;
-		await db.updateOne({ id: userId }, { $set: { customerId: customerId  }} );
-		return true;
-
+		const result = await db.updateOne({ userId: userId }, { $setOnInsert: { customerId: customerId } });
+		if (result.modifiedCount === 1) {
+			return true; // Return true if the document was successfully updated
+		} else {
+			return false; // Return false if the document was not updated
+		}
 	} catch (e) {
 		console.error(e);
-		return false;
+		return false; // Return false if an error occurred
 	}
 }

@@ -2,19 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { CardHeader } from "../ui/card";
 import { motion } from "framer-motion"
-export default function Instrument({ instrument, className, upDownAnimate, index } : {
+export default function Instrument({ instrument, className, initial, whileInView, index } : {
 	instrument:  {
 		src: string;
 		href: string;
 		name: string;
 	},
 	className?: string,
-	upDownAnimate?: any,
+	initial?: any,
+	whileInView?: any,
 	index: number
 }) {
-	console.log(index);
 	return (
-		<motion.div {...upDownAnimate} transition={{ delay: index / 10 + 1}} >
+		<motion.div transition={{ delay: index / 10 + 0.3}} initial={initial} whileInView={whileInView} >
 			<Link
 				href={instrument.href}
 				className={`${className} hover:scale-105 hover:rsor-pointer transition`}

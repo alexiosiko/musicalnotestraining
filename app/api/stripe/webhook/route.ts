@@ -1,5 +1,5 @@
 import { queryStringToJson } from "@/api/utils";
-import { addCredits } from "../../mongodb/userapi";
+import { addCredits, setCustomerId } from "../../mongodb/userapi";
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
@@ -38,9 +38,8 @@ export async function POST(request: Request, res: Response) {
 			const customer = await stripe.customers.retrieve(object.customer);
 
 			if (await addCredits(customer.id, credits, true)) {
-				
+				console.log(`Successfully added ${credits} credits to customerId: ${customer.id}`);
 			}
-			console.log(`Successfully`)
 
 			break;
 		case 'customer.subscription.deleted':

@@ -50,6 +50,8 @@ export async function POST(req: Request, res: Response) {
 		
 		// Get the newly created customerId
 		const newCustomerId = customer.id;
+		console.log("newcustomerId ", newCustomerId);
+		console.log("useridId ", userId);
 		
 		if (await setCustomerId(userId, newCustomerId))
 			console.log(`Successfully added customerId: ${newCustomerId} to user: ${userId}`);
@@ -60,18 +62,18 @@ export async function POST(req: Request, res: Response) {
 		
 		// Use the newCustomerId for the session
 		const session = await stripe.checkout.sessions.create({
-		customer: newCustomerId,
-		billing_address_collection: 'auto',
-		line_items: [
-			{
+			customer: newCustomerId,
+			billing_address_collection: 'auto',
+			line_items: [
+{
 				price: prices.data[0].id,
 				// For metered billing, do not pass quantity
 				quantity: 1,
 			},
 		],
-		mode: 'subscription',
-		success_url: `${YOUR_DOMAIN}/?success=true&session_id={CHECKOUT_SESSION_ID}`,
-		cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+			mode: 'subscription',
+			success_url: `${YOUR_DOMAIN}/success/?success=true&session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${YOUR_DOMAIN}?canceled=true`,
 		});
 	
 		redirect(session.url);
