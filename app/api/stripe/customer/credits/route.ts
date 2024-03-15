@@ -1,4 +1,4 @@
-import { stripe } from "../../stripe";
+export const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req: Request, res: Response) {
 	const body = await req.text();
