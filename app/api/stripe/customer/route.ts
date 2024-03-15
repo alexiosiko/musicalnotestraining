@@ -8,9 +8,7 @@ export async function POST(req: Request, res: Response) {
 	const userId = json.userId;
 	let customers;
 	try {
-		customers = await stripe.customers.list({
-			// query: `metadata[\'userId\']:\'${userId}\'`,
-		})
+		customers = await stripe.customers.list()
 		const customerId = customers.data[0].id;
 		return new Response(JSON.stringify({
 			customerId: customerId,
