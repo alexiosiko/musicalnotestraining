@@ -8,7 +8,6 @@ import { useUser } from '@clerk/nextjs';
 import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ThreeDots } from 'react-loader-spinner';
 import { motion } from "framer-motion";
-import { getCustomerId } from '../api/stripe/customerapi';
 
 export default function Plans() {
 	const clerkUser = useUser();

@@ -11,8 +11,8 @@ export async function POST(req: Request, res: Response) {
 		return new Response(JSON.stringify({
 			customerId: customer.data[0].id
 		}), { status: 200 });
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error fetching customer:', error);
-		return new Response(JSON.stringify({}), { status: 500 });
+		return new Response(JSON.stringify({ message: error.message }), { status: 500 });
 	}
 }
