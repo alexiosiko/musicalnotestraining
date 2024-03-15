@@ -31,16 +31,11 @@ export default function Plans() {
 				console.log(json);
 				if (res.status != 200) {
 					console.error("Error getting customerId: " +  json.message);
-					console.error("customers: " +  json.customers);
 					return;
-				} 
-				console.log("customers: " + json.customers);
-				const _customerId = json.customerId;
-				if (_customerId) 
+				} else {
+					const _customerId = json.customerId;
 					setCustomerId(_customerId)
-				else {
-					setCustomerId("");
-			}
+				}
 			} catch (e) {
 				alert(e);
 			}
