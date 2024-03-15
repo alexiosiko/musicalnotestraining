@@ -1,5 +1,5 @@
 import { queryStringToJson } from "@/api/utils";
-import { addCredits, setCustomerId } from "../../mongodb/userapi";
+import { setCredits } from "../customerapi";
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
@@ -34,10 +34,10 @@ export async function POST(request: Request, res: Response) {
     switch (event.type) {
 		case 'invoice.paid':
 			object = event.data.object;
-			const credits = parseInt(object.lines.data[0].plan.metadata.credits);
+			const credits = object.lines.data[0].plan.metadata.credits;
 			const customer = await stripe.customers.retrieve(object.customer);
 
-			if (await addCredits(customer.id, credits, true)) {
+			if (await setCredits(customer, credits)) {
 				console.log(`Successfully added ${credits} credits to customerId: ${customer.id}`);
 			}
 
@@ -67,3 +67,4 @@ export async function POST(request: Request, res: Response) {
     // Return a 200 response to acknowledge receipt of the event
     return new Response(null, { status: 200 });
 }
+

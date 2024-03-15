@@ -9,12 +9,12 @@ export const plans = [
 	  header: "STANDARD",
 	  price: "3.99",
 	  credits: 100,
-	  lookup_key: "price_1OsV5PJWOxm8lyxDFoH0Ivyo",
+	  lookup_key: "standard",
 	},
 	{
 	  header: "PRO",
 	  price: "9.99",
 	  credits: 250,
-	  lookup_key: "price_1OsV6fJWOxm8lyxDYoE08G22",
+	  lookup_key: "pro",
 	}
 ]

@@ -19,10 +19,9 @@ export default function Plan({ data, user, customerId }: {
 	const userName = user.firstName ? user.firstName : "Empty";
 	return (
 		<form action="/api/stripe/create-checkout-session" method="POST" encType="application/json">
-			<input  name="lookupKey" defaultValue={data.lookup_key} />
-			<input  name="customerId" defaultValue={customerId} />
-			<input  name="userId" defaultValue={user.id} />
-			<input  name="userName" defaultValue={userName} />
+			<input hidden name="lookupKey" defaultValue={data.lookup_key} />
+			<input hidden name="customerId" defaultValue={customerId} />
+			<input hidden name="userName" defaultValue={userName} />
 			<Card className="w-[220px] text-center">
 				<CardHeader>{data.header}</CardHeader>
 				<CardContent className="mt-4 mb-4">

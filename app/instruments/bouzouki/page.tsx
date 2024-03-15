@@ -8,8 +8,8 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
-import { getCredits, verifyUser } from "@/app/api/mongodb/userapi";
 import { ThreeDots } from "react-loader-spinner";
+import { getCredits } from "@/app/api/stripe/customerapi";
 
 export default function InstrumentPage() {
 	const clerkUser = useUser();
@@ -23,8 +23,6 @@ export default function InstrumentPage() {
 	useEffect(() => {
 		if (clerkUser.user == undefined)
 			return;		
-		// Make sure user exists, if not, create
-		verifyUser(clerkUser.user.id);
 		// Update credits once
 		async function getAndSetCredits() {
 			if (clerkUser.user == undefined)

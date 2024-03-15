@@ -8,7 +8,7 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
-import { getCredits, verifyUser } from "@/app/api/mongodb/userapi";
+import { getCredits } from "@/app/api/stripe/customerapi";
 
 export default function InstrumentPage() {
 	const clerkUser = useUser();
@@ -20,14 +20,16 @@ export default function InstrumentPage() {
 	const [credits, setCredits] = useState<number>(0);
 
 	useEffect(() => {
-		if (!clerkUser.user)
-			return;
-		
-		// Insert user once
-		verifyUser(clerkUser.user.id);
-
+		if (clerkUser.user == undefined)
+			return;		
 		// Update credits once
-		getCredits(clerkUser.user.id).then(credits => setCredits(credits));
+		async function getAndSetCredits() {
+			if (clerkUser.user == undefined)
+				return;		
+			setCredits(await getCredits(clerkUser.user.id));
+		}
+		getAndSetCredits();
+		
 	}, [clerkUser?.user]);
 
 	function shuffle() {

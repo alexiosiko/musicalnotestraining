@@ -2,31 +2,28 @@
 
 import Instrument from '@/components/instruments/instrument'
 import { instruments } from '@/components/instruments/data'
-import { CardDescription, CardFooter, CardHeader, Card, CardTitle, CardContent } from '@/components/ui/card'
+import { CardDescription, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import Image from 'next/image'
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import AnimatedDiv from '@/components/animate'
-import { motion } from "framer-motion";
-
-
 
 export default function Index() {
   return (
 	<div className='m-auto mt-4 flex flex-col gap-10 overflow-hidden'>
 		<div className='sm:grid grid-cols-2 items-center gap-4'>
-        <AnimatedDiv
+		<AnimatedDiv
 		direction='left'
 			style={{ backgroundImage: `url("/images/landingpage/landingmain.png")` }}
 			className='bg-contain bg-center bg-accent h-[230px] rounded-3xl flex'
 			/>
-        <AnimatedDiv direction='right' className='flex flex-col gap-4 mt-4'>
-          <CardTitle>Master your Musical Ear</CardTitle>
-          <CardDescription>Sight reading and ear training for musicians. Learn to be an amazing musician</CardDescription>
-          <Button size={"sm"} className='w-fit'>
-            Start Training
-          </Button>
-        </AnimatedDiv>
+		<AnimatedDiv direction='right' className='flex flex-col gap-4 mt-4'>
+		<CardTitle>Master your Musical Ear</CardTitle>
+		<CardDescription>Sight reading and ear training for musicians. Learn to be an amazing musician</CardDescription>
+		<Button size={"sm"} className='w-fit'>
+			Start Training
+		</Button>
+		</AnimatedDiv>
 		</div>
 		
 		<AnimatedDiv direction='up' delay={0.1}> 

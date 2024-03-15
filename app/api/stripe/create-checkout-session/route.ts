@@ -1,6 +1,5 @@
 import { queryStringToJson } from "@/api/utils";
 import { redirect } from "next/navigation";
-import { setCustomerId } from "../../mongodb/userapi";
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
@@ -19,6 +18,7 @@ export async function POST(req: Request, res: Response) {
 	});
 	let customer;
 	if (customerId != "") {
+		console.log("Customer has an account, connecting to it.");
 		// Use the customerId for the session
 		const session = await stripe.checkout.sessions.create({
 			customer: customerId,
@@ -42,27 +42,16 @@ export async function POST(req: Request, res: Response) {
 		customer = await stripe.customers.create({
 			name: userName,
 			metadata: {
-				userId: userId
+				userId: userId,
+				credits: 25,
 			}
 		// Add any additional parameters you want for the new customer
 		});
 
 		
-		// Get the newly created customerId
-		const newCustomerId = customer.id;
-		console.log("newcustomerId ", newCustomerId);
-		console.log("useridId ", userId);
-		
-		if (await setCustomerId(userId, newCustomerId))
-			console.log(`Successfully added customerId: ${newCustomerId} to user: ${userId}`);
-		else {
-			console.error(`Unsuccessfully added customerId: ${newCustomerId} to user: ${userId}`);
-			redirect("/error")
-		}
-		
 		// Use the newCustomerId for the session
 		const session = await stripe.checkout.sessions.create({
-			customer: newCustomerId,
+			customer: customer.id,
 			billing_address_collection: 'auto',
 			line_items: [
 {

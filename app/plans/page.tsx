@@ -4,11 +4,11 @@
 import React, { useEffect, useState } from 'react';
 import { plans } from "@/components/plans/data";
 import Plan from '@/components/plans/plan';
-import { getCustomerId, verifyUser } from '../api/mongodb/userapi';
 import { useUser } from '@clerk/nextjs';
 import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ThreeDots } from 'react-loader-spinner';
 import { motion } from "framer-motion";
+import { getCustomerId } from '../api/stripe/customerapi';
 
 export default function Plans() {
 	const clerkUser = useUser();
@@ -16,10 +16,18 @@ export default function Plans() {
 
 	useEffect(() => {
 		async function fetchData() {
-			if (clerkUser.user == undefined || clerkUser.user.id == undefined)
-				return;
-			await verifyUser(clerkUser.user.id);
-			setCustomerId(await getCustomerId(clerkUser.user.id));
+			try {
+				if (clerkUser.user == undefined || clerkUser.user.id == undefined)
+					return;
+				const customerId = await getCustomerId(clerkUser.user.id);
+				if (customerId) 
+					setCustomerId(customerId)
+				else {
+					setCustomerId("");
+			}
+			} catch (e) {
+				alert(e);
+			}
 		}
 			fetchData();
 		}, [clerkUser.user?.id]);
