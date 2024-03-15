@@ -3,9 +3,9 @@ import { Dispatch, SetStateAction } from "react";
 import { Button } from "./ui/button";
 import { CiPlay1 } from "react-icons/ci";
 import { Bars } from 'react-loader-spinner'
-import { getCredits, addCredits } from "@/app/api/mongodb/userapi";
+import { addCredits, getCredits } from "@/app/api/stripe/customerapi";
 
-export default function Play({ audios, isPlaying, setIsPlaying, id, setCredits, credits }: { 
+export default function Play({ audios, isPlaying, setIsPlaying, id: userId, setCredits, credits }: { 
 	audios: Audio[] | undefined,
 	isPlaying: boolean,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>,
@@ -14,19 +14,19 @@ export default function Play({ audios, isPlaying, setIsPlaying, id, setCredits, 
 	credits: number
 }) {
 	async function minusCredits() {
-		if (id == null) {
+		if (userId == null) {
 			console.log("Could not get user id");
 			return;
 		}
-		await addCredits(id, -1);
-		setCredits(await getCredits(id))
+		await addCredits(userId, -1);
+		setCredits(await getCredits(userId))
 	}
 	async function onPlay() {
 		minusCredits();
 
 		if (audios == undefined || audios == null)
 			return;
-		if (id == undefined) {
+		if (userId == undefined) {
 			console.error("Error getting user id");
 			return;
 		}
