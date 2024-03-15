@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
 // Get customer
 export async function POST(req: Request, res: Response) {
@@ -18,6 +18,6 @@ export async function POST(req: Request, res: Response) {
 		}), { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
-		return new Response(JSON.stringify({ message: error.message, customers: customers }), { status: 500 });
+		return new Response(JSON.stringify({ message: error.message, customers: customers, sk: process.env.STRIPE_SECRET_KEY as string}), { status: 500 });
 	}
 }
