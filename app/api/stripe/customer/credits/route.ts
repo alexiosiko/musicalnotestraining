@@ -10,7 +10,7 @@ export async function POST(req: Request, res: Response) {
 			query: `metadata[\'userId\']:\'${userId}\'`,
 		})
 		return new Response(JSON.stringify({
-			customerId: customer.data[0].id
+			customer: customer,
 		}), { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
