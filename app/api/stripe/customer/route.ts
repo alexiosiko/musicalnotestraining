@@ -1,18 +1,18 @@
-import { stripe } from "../../stripe";
+import { stripe } from "../stripe";
 
-// Get credits
+// Get customer
 export async function POST(req: Request, res: Response) {
-	console.log("/api/stripe/customer");
+	console.log("/api/stripe/customer/credits");
 	const body = await req.text();
 	const json = JSON.parse(body);
 	const userId = json.userId;
-	console.log(body);
 	try {
 		const customer = await stripe.customers.search({
 			query: `metadata[\'userId\']:\'${userId}\'`,
 		})
+		console.log(customer.data[0].id);
 		return new Response(JSON.stringify({
-			customer: customer,
+			customerId: customer.data[0].id,
 		}), { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
