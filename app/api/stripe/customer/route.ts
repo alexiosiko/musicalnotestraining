@@ -8,15 +8,18 @@ export async function POST(req: Request, res: Response) {
 	const userId = json.userId;
 	let customers;
 	try {
-		customers = await stripe.customers.list()
-
-		const foundCustomer = customers.data.find((customer: any)=> {
-            return customer.metadata && customer.metadata.userId == userId;
-        });
-
-		const customerId = foundCustomer.id;
+		const customers = await stripe.customers.search({
+			query: `metadata[\'userId\']:\'${userId}\'`,
+		  });
+		  console.log(customers);
+		if (customers.data) {
+			return new Response(JSON.stringify({
+				customerId: customers.data[0].id,
+				customers: customers
+			}), { status: 200 });
+		}
 		return new Response(JSON.stringify({
-			customerId: customerId,
+			customerId: "",
 			customers: customers
 		}), { status: 200 });
 	} catch (error: any) {

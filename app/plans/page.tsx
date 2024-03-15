@@ -18,6 +18,7 @@ export default function Plans() {
 			try {
 				if (clerkUser.user == undefined || clerkUser.user.id == undefined)
 					return;
+				console.log(clerkUser.user.id);
 				const res = await fetch("/api/stripe/customer", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
