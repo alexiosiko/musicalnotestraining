@@ -6,24 +6,18 @@ export async function POST(req: Request, res: Response) {
 	const body = await req.text();
 	const json = JSON.parse(body);
 	const userId = json.userId;
+	let customers;
 	try {
-		const customer = await stripe.customers.list({
-            limit: 1,
-            metadata: {
-                userId: userId
-            }
-        });
-		if (customer.data.length > 0) {
-            return new Response(JSON.stringify({
-                customerId: customer.data[0].id,
-            }), { status: 200 });
-        } else {
-            return new Response(JSON.stringify({
-                message: "Customer not found",
-            }), { status: 404 });
-        }
+		customers = await stripe.customers.search({
+			query: `metadata[\'userId\']:\'${userId}\'`,
+		})
+		const customerId = customers.data[0].id;
+		return new Response(JSON.stringify({
+			customerId: customerId,
+			customers: customers
+		}), { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
-		return new Response(JSON.stringify({ message: error.message }), { status: 500 });
+		return new Response(JSON.stringify({ message: error.message, customers: customers }), { status: 500 });
 	}
 }
