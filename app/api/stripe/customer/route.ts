@@ -6,8 +6,9 @@ export async function POST(req: Request, res: Response) {
 	const body = await req.text();
 	const json = JSON.parse(body);
 	const userId = json.userId;
+	let customer;
 	try {
-		const customer = await stripe.customers.search({
+		customer = await stripe.customers.search({
 			query: `metadata[\'userId\']:\'${userId}\'`,
 		})
 		console.log(customer.data[0].id);
@@ -16,6 +17,6 @@ export async function POST(req: Request, res: Response) {
 		}), { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
-		return new Response(JSON.stringify({ message: error.message }), { status: 500 });
+		return new Response(JSON.stringify({ message: error.message, customer: customer }), { status: 500 });
 	}
 }
