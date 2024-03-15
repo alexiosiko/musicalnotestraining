@@ -27,13 +27,10 @@ export default function Plans() {
 				})
 				const json = await res.json()
 				if (res.status != 200) {
-					console.error("Error getting customerId: " +  json.customers);
+					console.error("Error getting customerId: " +  json.message);
 					return;
 				} 
-				console.error("message: ", json.message);
-				console.log(json.customers);
 				const _customerId = json.customerId;
-				console.log("customerId: ", _customerId);
 				if (_customerId) 
 					setCustomerId(_customerId)
 				else {

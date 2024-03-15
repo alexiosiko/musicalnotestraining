@@ -17,10 +17,9 @@ export async function POST(req: Request, res: Response) {
 		const customerId = foundCustomer.id;
 		return new Response(JSON.stringify({
 			customerId: customerId,
-			customers: customers
 		}), { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
-		return new Response(JSON.stringify({ message: error.message, customers: customers}), { status: 500 });
+		return new Response(JSON.stringify({ message: error.message }), { status: 500 });
 	}
 }
