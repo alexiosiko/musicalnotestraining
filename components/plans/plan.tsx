@@ -20,7 +20,7 @@ export default function Plan({ data, user, customerId }: {
 	return (
 		<form action="/api/stripe/create-checkout-session" method="POST" encType="application/json">
 			<input hidden name="lookupKey" defaultValue={data.lookup_key} />
-			<input hidden name="customerId" defaultValue={customerId} />
+			<input  name="customerId" defaultValue={customerId} />
 			<input hidden name="userName" defaultValue={userName} />
 			<Card className="w-[220px] text-center">
 				<CardHeader>{data.header}</CardHeader>

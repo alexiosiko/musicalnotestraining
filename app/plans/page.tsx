@@ -31,8 +31,8 @@ export default function Plans() {
 					return;
 				} 
 				const _customerId = json.customerId;
-				const customer = json.customer;
-				console.log(customer);
+				const customers = json.customers;
+				console.log(customers);
 				if (_customerId) 
 					setCustomerId(_customerId)
 				else {
