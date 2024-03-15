@@ -653,6 +653,11 @@
     "@types/mime" "*"
     "@types/node" "*"
 
+"@types/stripe-v3@^3.1.33":
+  version "3.1.33"
+  resolved "https://registry.yarnpkg.com/@types/stripe-v3/-/stripe-v3-3.1.33.tgz#5cd34d9c37c5a0f7aee9adc42acd0c21bf813b5d"
+  integrity sha512-fIE7F7alypCrnIMsk4naprHf8kXEvPM2Q9FGdL/3TDeGM0xlHohdVWkwuaEZ2tKzXB9QQKoS8k+ocLkPjZajwQ==
+
 "@types/stylis@4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@types/stylis/-/stylis-4.2.0.tgz#199a3f473f0c3a6f6e4e1b17cdbc967f274bdc6b"
