@@ -9,7 +9,12 @@ export async function POST(req: Request, res: Response) {
 	let customers;
 	try {
 		customers = await stripe.customers.list()
-		const customerId = customers.data[0].id;
+
+		const foundCustomer = customers.data.find((customer: any)=> {
+            return customer.metadata && customer.metadata.userId === userId;
+        });
+
+		const customerId = foundCustomer.id;
 		return new Response(JSON.stringify({
 			customerId: customerId,
 			customers: customers
