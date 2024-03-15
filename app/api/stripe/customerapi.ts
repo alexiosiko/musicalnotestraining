@@ -1,6 +1,7 @@
 "use server"
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 export async function getCustomerId(userId: string): Promise<string | undefined> {
 	console.log("getCustomerId");
 	try {

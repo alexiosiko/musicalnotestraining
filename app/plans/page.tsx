@@ -19,9 +19,21 @@ export default function Plans() {
 			try {
 				if (clerkUser.user == undefined || clerkUser.user.id == undefined)
 					return;
-				const customerId = await getCustomerId(clerkUser.user.id);
-				if (customerId) 
-					setCustomerId(customerId)
+				const res = await fetch("/api/stripe/customer/credits", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						userId: clerkUser.user.id,
+					})
+				})
+				if (res.status != 200) {
+					console.error("Error getting customerId");
+					return;
+				} 
+				const json = await res.json()
+				const _customerId = json.customerId;
+				if (_customerId) 
+					setCustomerId(_customerId)
 				else {
 					setCustomerId("");
 			}
