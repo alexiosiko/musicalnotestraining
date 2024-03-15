@@ -1,6 +1,7 @@
-export const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(req: Request, res: Response) {
+	console.log("/api/stripe/customer/credits");
 	const body = await req.text();
 	const json = JSON.parse(body);
 	const userId = json.userId;
