@@ -6,13 +6,11 @@ export async function POST(req: Request, res: Response) {
 	const json = JSON.parse(body);
 	const userId = json.userId;
 	try {
-		const customers = await stripe.customers.list();
-		console.log(customers);
 		const customer = await stripe.customers.search({
 			query: `metadata[\'userId\']:\'${userId}\'`,
 		})
 		return new Response(JSON.stringify({
-			customers: customers,
+			customer: customer,
 		}), { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
