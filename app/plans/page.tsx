@@ -25,13 +25,15 @@ export default function Plans() {
 						userId: clerkUser.user.id,
 					})
 				})
-				const json = await res.json()
+				const body = await res.text();
+				const json = await JSON.parse(body);
+				console.log(json);
 				if (res.status != 200) {
 					console.error("Error getting customerId: " +  json.message);
 					console.error("customers: " +  json.customers);
 					return;
 				} 
-				console.error("customers: " +  json.customers);
+				console.log("customers: " + json.customers);
 				const _customerId = json.customerId;
 				if (_customerId) 
 					setCustomerId(_customerId)
