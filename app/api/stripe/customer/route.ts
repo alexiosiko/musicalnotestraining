@@ -8,12 +8,12 @@ export async function POST(req: Request, res: Response) {
 	const userId = json.userId;
 	let customers;
 	try {
-		customers = await stripe.customers.search({
-			query: `metadata[\'userId\']:\'${userId}\'`,
+		customers = await stripe.customers.list({
+			// query: `metadata[\'userId\']:\'${userId}\'`,
 		})
-		const customerId = customers.data[0].id;
+		// const customerId = customers.data[0].id;
 		return new Response(JSON.stringify({
-			customerId: customerId,
+			// customerId: customerId,
 			customers: customers
 		}), { status: 200 });
 	} catch (error: any) {
