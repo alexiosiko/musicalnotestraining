@@ -12,7 +12,6 @@ export async function POST(req: Request, res: Response) {
 		if (!sig || !webhookSecret)
 			return Response.json('Webhook secret not found.', { status: 401 })
 		event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-		console.log(`🔔  Webhook received: ${event.type}`);
 	} catch (err: any) {
 		console.log(`❌ Error message: ${err.message}`);
 		return new Response(`Webhook Error: ${err.message}`, { status: 402 });
@@ -24,7 +23,9 @@ export async function POST(req: Request, res: Response) {
 				const object = event.data.object;
 				if ((await setCredits(object)) == false)
 					return Response.json('Webhook handler failed.', { status: 500 });
+				console.log("Payment success and setCredits success");
 				break;
+			default: break;
 		}
 
 	} catch (error) {

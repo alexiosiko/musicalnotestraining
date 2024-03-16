@@ -8,6 +8,7 @@ import { useUser } from '@clerk/nextjs';
 import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ThreeDots } from 'react-loader-spinner';
 import { motion } from "framer-motion";
+import { Button } from '@/components/ui/button';
 
 export default function Plans() {
 	const clerkUser = useUser();
@@ -43,7 +44,7 @@ export default function Plans() {
 
 	return (
 		<div className='m-auto mt-12 gap-12 flex flex-col'>
-			<CardTitle>Buy More Credits!</CardTitle>
+			<CardTitle >Become a Subscriber!</CardTitle>
 			<div>
 				{customerId === undefined && (
 				<motion.div className='flex gap-2'>
@@ -53,7 +54,7 @@ export default function Plans() {
 				)}
 				
 				{clerkUser.user && customerId !== undefined && customerId !== null && (
-					<motion.div className='sm:grid grid-cols-3 items-center'>
+					<motion.div className='sm:grid grid-cols-3 items-center m-auto place-items-center'>
 						{plans.map((plan, index: number) => (
 							<motion.div key={index}>
 								<Plan customerId={customerId} user={clerkUser.user} data={plan} />
@@ -62,6 +63,18 @@ export default function Plans() {
 					</motion.div>
 				)}
 			</div>
+
+			<form action="/create-portal-session" method="POST" className='m-auto'>
+				<input
+				type="hidden"
+				id="session-id"
+				name="session_id"
+				// value={sessionId}
+				/>
+				<Button id="checkout-and-portal-button" type="submit" className=''>
+				Manage your billing information
+				</Button>
+			</form>
 		</div>
 	);
 }

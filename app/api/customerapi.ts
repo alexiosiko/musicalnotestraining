@@ -21,7 +21,6 @@ export async function getCustomerId(userId: string): Promise<string | undefined>
 export async function setCredits(object: Stripe.Invoice): Promise<boolean> {
 	console.log("setCredits()");
 	try {
-		console.log(object);
 		const customer: Stripe.Customer = await stripe.customers.retrieve(object.customer);
 		await stripe.customers.update(object.customer, {
 			metadata: {

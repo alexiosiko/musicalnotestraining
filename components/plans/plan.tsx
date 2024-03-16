@@ -20,8 +20,8 @@ export default function Plan({ data, user, customerId }: {
 	return (
 		<form action="/api/create-checkout-session" method="POST">
 			<input hidden name="lookupKey" defaultValue={data.lookup_key} />
-			<input name="customerId" defaultValue={customerId} />
-			<input name="userId" defaultValue={user.id} />
+			<input hidden name="customerId" defaultValue={customerId} />
+			<input hidden name="userId" defaultValue={user.id} />
 			<input hidden name="userName" defaultValue={userName} />
 			<Card className="w-[220px] text-center">
 				<CardHeader>{data.header}</CardHeader>
@@ -31,7 +31,7 @@ export default function Plan({ data, user, customerId }: {
 				</CardContent>
 				<CardFooter>
 					<a className="w-full" >
-						<Button size={'sm'} className="w-full">Buy</Button>
+						<Button size={'sm'} className="w-full">Subscribe</Button>
 					</a>
 				</CardFooter>
 			</Card>
