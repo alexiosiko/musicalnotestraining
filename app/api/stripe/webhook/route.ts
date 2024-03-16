@@ -6,19 +6,20 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(req: Request, res: Response) {
 	const body = await req.text();
-  const sig = req.headers.get('stripe-signature') as string;
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  let event: Stripe.Event;
+	const sig = req.headers.get('stripe-signature') as string;
+	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+	let event: Stripe.Event;
 
-  try {
-    if (!sig || !webhookSecret)
-      return new Response('Webhook secret not found.', { status: 400 });
-    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-    console.log(`🔔  Webhook received: ${event.type}`);
-  } catch (err: any) {
-    console.log(`❌ Error message: ${err.message}`);
-    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
-  }
+	return Response.json({ recieved: true });
+	try {
+		if (!sig || !webhookSecret)
+		return new Response('Webhook secret not found.', { status: 400 });
+		event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+		console.log(`🔔  Webhook received: ${event.type}`);
+	} catch (err: any) {
+		console.log(`❌ Error message: ${err.message}`);
+		return new Response(`Webhook Error: ${err.message}`, { status: 400 });
+	}
 
 //   if (relevantEvents.has(event.type)) {
 //     try {
@@ -75,5 +76,5 @@ export async function POST(req: Request, res: Response) {
 //       status: 400
 //     });
 //   }
-  return new Response(JSON.stringify({ received: true }));
+	return Response.json({ recieved: true });
 }
