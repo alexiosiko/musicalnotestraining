@@ -25,10 +25,8 @@ export default function Plans() {
 						userId: clerkUser.user.id,
 					})
 				})
-				console.log("res: ", res);
-				const body = await res.text();
-				console.log("body: ", body);
-				const json = await JSON.parse(body);
+				const json = await res.json();
+				console.log(json);
 				if (res.status != 200) {
 					console.error("Error getting customerId: " +  json.message);
 					return;
