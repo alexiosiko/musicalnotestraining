@@ -1,11 +1,14 @@
 import Stripe from 'stripe';
 import { setCredits } from '../customerapi';
+import { headers } from "next/headers"
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
 
 export async function POST(req: Request, res: Response) {
 	const body = await req.text();
-	const sig = req.headers.get('stripe-signature') as string;
+	const sig = headers().get("Stripe-Signature") as string
+	console.log("sig: ", sig);
 	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 	let event: Stripe.Event;
 	try {
