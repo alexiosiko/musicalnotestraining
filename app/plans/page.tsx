@@ -28,7 +28,7 @@ export default function Plans() {
 				const json = await res.json();
 				console.log(json);
 				if (res.status != 200) {
-					console.error("Error getting customerId: " +  json.message);
+					alert("Error connecting to Stripe Database... " +  json.message);
 					return;
 				} else {
 					const _customerId = json.customerId;

@@ -38,7 +38,9 @@ export async function POST(request: Request, res: Response) {
 			const customer = await stripe.customers.retrieve(object.customer);
 
 			if (await setCredits(customer, credits)) {
-				console.log(`Successfully added ${credits} credits to customerId: ${customer.id}`);
+				console.log(`Successfully set ${credits} credits to customerId: ${customer.id}`);
+			} else {
+				console.error(`Unsuccefful set ${credits} credits to customerId: ${customer.id}`);
 			}
 
 			break;
@@ -65,6 +67,6 @@ export async function POST(request: Request, res: Response) {
 			console.log(`Unhandled event type ${event.type}.`);
     }
     // Return a 200 response to acknowledge receipt of the event
-    return new Response(null, { status: 200 });
+    return Response.json({ message: "Alexi it payed"}, { status: 200 });
 }
 
