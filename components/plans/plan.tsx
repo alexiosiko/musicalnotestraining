@@ -20,8 +20,8 @@ export default function Plan({ data, user, customerId }: {
 	return (
 		<form action="https://www.musicalnotestraining.com/api/stripe/create-checkout-session" method="POST">
 			<input hidden name="lookupKey" defaultValue={data.lookup_key} />
-			<input hidden name="customerId" defaultValue={customerId} />
-			<input hidden name="userId" defaultValue={user.id} />
+			<input name="customerId" defaultValue={customerId} />
+			<input name="userId" defaultValue={user.id} />
 			<input hidden name="userName" defaultValue={userName} />
 			<Card className="w-[220px] text-center">
 				<CardHeader>{data.header}</CardHeader>
