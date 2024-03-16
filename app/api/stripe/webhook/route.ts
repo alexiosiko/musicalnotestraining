@@ -5,6 +5,8 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
 
 export async function POST(req: Request, res: Response) {
+	return Response.json({ recieved: true });
+
 	const body = await req.text();
 	const sig = req.headers.get('stripe-signature') as string;
 	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
