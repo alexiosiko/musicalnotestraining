@@ -28,7 +28,6 @@ export default function Plans() {
 				})
 				const body = await res.text();
 				const json = await JSON.parse(body);
-				console.log(json);
 				if (res.status != 200) {
 					console.error("Error getting customerId: " +  json.message);
 					return;
