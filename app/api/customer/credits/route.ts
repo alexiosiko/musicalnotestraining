@@ -20,6 +20,3 @@ export async function POST(req: Request, res: Response) {
 	}
 }
 
-export async function setCredts(customersId: string): Promise<boolean> {
-	throw Error("");
-}

@@ -24,7 +24,7 @@ export async function POST(req: Request, res: Response) {
 				const object = event.data.object;
 				if ((await setCredits(object)) == false)
 					return Response.json('Webhook handler failed.', { status: 500 });
-			break;
+				break;
 		}
 
 	} catch (error) {
