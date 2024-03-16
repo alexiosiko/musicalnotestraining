@@ -17,15 +17,18 @@ export async function POST(req: Request, res: Response) {
 			return Response.json({
 				customerId: customer.id,
 				userId: userId,
+				customers: customers,
 			}, { status: 200 });
 		}
 		console.log("Customer doesn't exist");
 		return Response.json({
 			customerId: "",
 			userId: userId,
+			customers: customers,
+
 		}, { status: 200 });
 	} catch (error: any) {
 		console.error('Error fetching customer:', error);
-		return Response.json({ message: error.message, userId: userId }, { status: 500});
+		return Response.json({ message: error.message, userId: userId, customers: customers }, { status: 500});
 	}
 }
