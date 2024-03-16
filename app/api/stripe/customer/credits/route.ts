@@ -1,4 +1,4 @@
-import { stripe } from "../../stripe";
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // Get credits
 export async function POST(req: Request, res: Response) {
