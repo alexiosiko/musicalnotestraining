@@ -61,6 +61,5 @@ export async function POST(req: Request, res: Response) {
 			console.log(`Unhandled event type ${event.type}.`);
     }
     // Return a 200 response to acknowledge receipt of the event
-    return Response.json({ message: "Alexi it payed"}, { status: 200 });
+	return new Response(JSON.stringify({ received: true }));
 }
-

@@ -16,16 +16,22 @@ export async function getCustomerId(userId: string): Promise<string | undefined>
 
 }
 
-export async function setCredits(customer: any, credits: number) {
+export async function setCredits(customer: any, credits: number): Promise<boolean> {
 	console.log("setCredits()");
 	console.log("credits " , credits);
-	await stripe.customers.update(customer.id, {
-		metadata: {
-			...customer.metadata,
-			credits: credits
-		}
-	});
-	return true;
+	try {
+
+		await stripe.customers.update(customer.id, {
+			metadata: {
+				...customer.metadata,
+				credits: credits
+			}
+		});
+		return true;
+	} catch (e) {
+		console.error("Error setting credits... :(", e);
+		return false;
+	}
 }
 
 export async function addCredits(customer: any, credits: number) {
