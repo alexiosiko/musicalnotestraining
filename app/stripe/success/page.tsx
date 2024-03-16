@@ -17,7 +17,7 @@ export default function Page() {
 				<CardTitle>Payment Successful!</CardTitle>
 				</div>
 			</div>
-			<form action="/api/stripe/create-portal-session" method="POST" encType="application/json" >
+			<form action="/api/create-portal-session" method="POST" encType="application/json" >
 				<input
 				hidden
 				id="session_id"

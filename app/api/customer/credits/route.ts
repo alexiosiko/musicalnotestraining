@@ -2,7 +2,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // Get credits
 export async function POST(req: Request, res: Response) {
-	console.log("/api/stripe/customer/credits");
+	console.log("/api/customer/credits");
 	const body = await req.text();
 	const json = JSON.parse(body);
 	const userId = json.userId;
@@ -18,4 +18,8 @@ export async function POST(req: Request, res: Response) {
 		console.error('Error fetching customer:', error);
 		return new Response(JSON.stringify({ message: error.message }), { status: 500 });
 	}
+}
+
+export async function setCredts(customersId: string): Promise<boolean> {
+	throw Error("");
 }

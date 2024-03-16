@@ -2,7 +2,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
 // Get customer
 export async function POST(req: Request, res: Response) {
-	console.log("/api/stripe/customer");
+	console.log("/api/customer");
 	const json = await req.json();
 	const userId = json.userId as string;
 	console.log("Searching for userId: ", userId);

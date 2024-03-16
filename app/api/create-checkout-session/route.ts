@@ -31,8 +31,8 @@ export async function POST(req: Request, res: Response) {
 			},
 			],
 			mode: 'subscription',
-			success_url: `${YOUR_DOMAIN}/checkout_completed?success=true&session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${YOUR_DOMAIN}/checkout_canceled?canceled=true`,
+			success_url: `${YOUR_DOMAIN}/stripe/success?success=true&session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${YOUR_DOMAIN}/stripe/canceled?canceled=true`,
 		});
 		redirect(session.url);
 	} else {
@@ -64,7 +64,6 @@ export async function POST(req: Request, res: Response) {
 			success_url: `${YOUR_DOMAIN}/success/?success=true&session_id={CHECKOUT_SESSION_ID}`,
 			cancel_url: `${YOUR_DOMAIN}?canceled=true`,
 		});
-	
 		redirect(session.url);
 	}
 }

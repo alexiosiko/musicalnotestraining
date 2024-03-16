@@ -1,5 +1,7 @@
 "use server"
 
+import Stripe from "stripe";
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export async function getCustomerId(userId: string): Promise<string | undefined> {
@@ -16,15 +18,15 @@ export async function getCustomerId(userId: string): Promise<string | undefined>
 
 }
 
-export async function setCredits(customer: any, credits: number): Promise<boolean> {
+export async function setCredits(object: Stripe.Invoice): Promise<boolean> {
 	console.log("setCredits()");
-	console.log("credits " , credits);
 	try {
-
-		await stripe.customers.update(customer.id, {
+		console.log(object);
+		const customer: Stripe.Customer = await stripe.customers.retrieve(object.customer);
+		await stripe.customers.update(object.customer, {
 			metadata: {
 				...customer.metadata,
-				credits: credits
+				credits: object.lines.data[0].metadata.credits,
 			}
 		});
 		return true;

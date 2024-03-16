@@ -9,7 +9,7 @@ import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
 import { ThreeDots } from "react-loader-spinner";
-import { getCredits } from "@/app/api/stripe/customerapi";
+import { getCredits } from "@/app/api/customerapi";
 
 export default function InstrumentPage() {
 	const clerkUser = useUser();

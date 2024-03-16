@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Button } from "./ui/button";
 import { CiPlay1 } from "react-icons/ci";
 import { Bars } from 'react-loader-spinner'
-import { addCredits, getCredits } from "@/app/api/stripe/customerapi";
+import { addCredits, getCredits } from "@/app/api/customerapi";
 
 export default function Play({ audios, isPlaying, setIsPlaying, id: userId, setCredits, credits }: { 
 	audios: Audio[] | undefined,

@@ -18,7 +18,7 @@ export default function Plans() {
 			try {
 				if (clerkUser.user == undefined || clerkUser.user.id == undefined)
 					return;
-				const res = await fetch("/api/stripe/customer", {
+				const res = await fetch("/api/customer", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -66,7 +66,3 @@ export default function Plans() {
 	);
 }
 
-
-/*
-https://musicalnotestraining.com/api/stripe/customer' from origin 'https://www.musicalnotestraining.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: Redirect is not allowed for a preflight request.
-*/
