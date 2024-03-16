@@ -12,7 +12,7 @@ export async function POST(req: Request, res: Response) {
 			query: `metadata[\'userId\']:\'${userId}\'`,
 		  });
 
-		customer = customers.data.findOne((customer: any) => customer.metadata == userId)
+		customer = customers.data.find((customer: any) => customer.metadata == userId)
 
 		return Response.json({
 			_customerId: "",
