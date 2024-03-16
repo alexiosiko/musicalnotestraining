@@ -7,15 +7,14 @@ export async function POST(req: Request, res: Response) {
 	const userId = json.userId;
 	let customers;
 	try {
-		customers = await stripe.customers.search({
-			query: `metadata[\'userId\']:\'${userId}\'`,
-		  });
+		customers = await stripe.customers.list();
 		if (customers.data[0]) {
 			return Response.json({
 				customerId: customers.data[0].id,
 				customers: customers
 			}, { status: 200 });
 		}
+
 		return Response.json({
 			_customerId: "",
 			userId: userId,
