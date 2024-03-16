@@ -14,7 +14,7 @@ export async function POST(req: Request, res: Response) {
 		event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
 	} catch (err: any) {
 		console.log(`❌ Error message: ${err.message}`);
-		return new Response(`Webhook Error: ${err.message}`, { status: 405 });
+		return new Response(`Webhook Error: ${err.message} sig: ${sig}`, { status: 405 });
 	}
 
     try {
