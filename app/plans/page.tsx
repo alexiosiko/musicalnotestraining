@@ -19,7 +19,7 @@ export default function Plans() {
 				if (clerkUser.user == undefined || clerkUser.user.id == undefined)
 					return;
 				console.log(clerkUser.user.id);
-				const res = await fetch("/api/stripe/customer", {
+				const res = await fetch("https://musicalnotestraining.com/api/stripe/customer", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
