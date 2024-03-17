@@ -9,19 +9,16 @@ const YOUR_DOMAIN = process.env.YOUR_DOMAIN;
 export async function POST(req: Request, res: Response) {
 	const query = await req.text();
 	const json = queryStringToJson(query);
-	const customerId = json.customerId;
-	const userId = json.userId;
-	const userName = json.userName;
 	const prices = await stripe.prices.list({
-			lookup_keys: [json.lookup_key],
+			lookup_keys: [json.lookupKey],
 			expand: ['data.product'],
 	});
 	let customer;
-	if (customerId != "") {
+	if (json.customerId != "") {
 		console.log("Customer has an account, connecting to it.");
 		// Use the customerId for the session
 		const session = await stripe.checkout.sessions.create({
-			customer: customerId,
+			customer: json.customerId,
 			billing_address_collection: 'auto',
 			line_items: [
 			{
@@ -40,9 +37,9 @@ export async function POST(req: Request, res: Response) {
 	
 		// If customerId is not provided, create a new customer
 		customer = await stripe.customers.create({
-			name: userName,
+			name: json.userName,
 			metadata: {
-				userId: userId,
+				userId: json.userId,
 				credits: 25,
 			}
 		// Add any additional parameters you want for the new customer
