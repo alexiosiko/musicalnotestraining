@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-		<html lang="en" className="text-foreground bg-background">
+		<html lang="en" className="text-foreground bg-background" style={{ scrollBehavior: 'smooth'}}>
 			<body className={`${inter.className} flex flex-col min-h-screen`}>
 				<div className="flex-grow">
 					<Nav />

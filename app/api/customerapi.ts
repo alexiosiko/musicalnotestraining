@@ -37,6 +37,22 @@ export async function setCredits(object: Stripe.Invoice): Promise<boolean> {
 		return false;
 	}
 }
+export async function setSessionId(object: Stripe.Checkout.Session): Promise<boolean> {
+	console.log("setSessionId()");
+	try {
+		const customer: Stripe.Customer = await stripe.customers.retrieve(object.customer);
+		await stripe.customers.update(object.customer, {
+			metadata: {
+				...customer.metadata,
+				sessionId: object.id,
+			}
+		});
+		return true;
+	} catch (e) {
+		console.error("Error setting sessionId... :(", e);
+		return false;
+	}
+}
 
 export async function findCustomerAndAddCredits(userId: string, credits: number): Promise<{ ok: boolean, credits?: number}> {
 	try {
@@ -75,6 +91,17 @@ export async function addCredits(customer: Stripe.Customer, credits: number): Pr
 }
 
 
+export async function getSessionId(customerId: string): Promise<string | undefined> {
+	console.log("getSessionId");
+	try {
+		const customer: Stripe.Customer = await stripe.customers.retrieve(customerId);
+		return customer.metadata.sessionId as string | undefined;
+	} catch (error) {
+		console.error('Error fetching customer:', error);
+		throw error
+	}
+
+}
 export async function getCredits(userId: string): Promise<number> {
 	console.log("getCredits");
 	try {

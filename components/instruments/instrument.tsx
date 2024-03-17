@@ -15,13 +15,13 @@ export default function Instrument({ instrument, className, initial, whileInView
 }) {
 	return (
 		<motion.div transition={{ delay: index / 10 + 0.3}} initial={initial} whileInView={whileInView} >
-			<Link
+			<a
 				href={instrument.href}
-				className={`${className} hover:scale-105 hover:rsor-pointer transition`}
+				className={`${className} hover:scale-120 hover:bg-red-400 hover:cursor-pointer transition`}
 				>
 				<Image src={instrument.src} alt={instrument.src} width={250} height={250} />
 				<CardHeader className="text-center mt-1">{instrument.name}</CardHeader>
-			</Link>
+			</a>
 		</motion.div>
 	)
 }

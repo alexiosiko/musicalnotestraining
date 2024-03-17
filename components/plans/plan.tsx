@@ -27,7 +27,8 @@ export default function Plan({ data, user, customerId }: {
 				<CardHeader>{data.header}</CardHeader>
 				<CardContent className="mt-4 mb-4">
 					<CardDescription className="text-4xl m-4">${data.price}</CardDescription>
-					<CardDescription className="text-xl">{data.credits}<span className="text-xs"> credits</span></CardDescription>
+					<CardDescription className="text-xl">{data.credits}</CardDescription>
+					<CardDescription className="text-xs mt-2">credits/month</CardDescription>
 				</CardContent>
 				<CardFooter>
 					<a className="w-full" >

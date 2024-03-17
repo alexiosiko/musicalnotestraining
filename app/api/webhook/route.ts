@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { setCredits } from '../customerapi';
+import { setCredits, setSessionId } from '../customerapi';
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY as string);
 
@@ -18,15 +18,28 @@ export async function POST(req: Request, res: Response) {
 		return Response.json({ WebHookerror:  err.message, sig: sig, webhookSecret: webhookSecret }, { status: 402 });
 	}
 
+	let object;
     try {
         switch (event.type) {
 			case 'invoice.paid':
-				const object = event.data.object;
+				object = event.data.object;
 				if ((await setCredits(object)) == false)
-					return Response.json('Webhook handler failed.', { status: 500 });
+					return Response.json('Unsuccessfully set customer credits', { status: 502 });
+				else
+					console.log("Successfully set customer credits");
+
 				console.log("Payment success and setCredits success");
 				break;
+			case 'checkout.session.completed':
+				object = event.data.object;
+				if ((await setSessionId(object)) == false)
+					return Response.json('Unsuccessfully set customer sessionId', { status: 501 });
+				else
+					console.log("Successfully set customer sessionid");
+
+				break;
 			default: break;
+
 		}
 	} catch (error) {
 		console.error(error);

@@ -9,10 +9,12 @@ import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ThreeDots } from 'react-loader-spinner';
 import { motion } from "framer-motion";
 import { Button } from '@/components/ui/button';
+import { getSessionId } from '../api/customerapi';
 
 export default function Plans() {
 	const clerkUser = useUser();
 	const [customerId, setCustomerId] = useState<string | undefined | null>(undefined);
+	const [sessionId, setSessionId] = useState<string | undefined>(undefined);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -27,20 +29,21 @@ export default function Plans() {
 					})
 				})
 				const json = await res.json();
-				console.log(json);
+				let _customerId;
 				if (res.status != 200) {
 					alert("Error connecting to Stripe Database... " +  json.message);
 					return;
 				} else {
-					const _customerId = json.customerId;
+					_customerId = json.customerId;
 					setCustomerId(_customerId)
 				}
+				setSessionId(await getSessionId(_customerId));
 			} catch (e) {
 				alert(e);
 			}
 		}
-			fetchData();
-		}, [clerkUser.user?.id]);
+		fetchData();
+	}, [clerkUser.user?.id]);
 
 	return (
 		<div className='m-auto mt-12 gap-12 flex flex-col'>
@@ -64,17 +67,19 @@ export default function Plans() {
 				)}
 			</div>
 
-			<form action="/create-portal-session" method="POST" className='m-auto'>
-				<input
-				type="hidden"
-				id="session-id"
-				name="session_id"
-				// value={sessionId}
-				/>
-				<Button id="checkout-and-portal-button" type="submit" className=''>
-				Manage your billing information
-				</Button>
-			</form>
+			{sessionId !== undefined &&
+				<form action="/api/create-portal-session" method="POST" className='m-auto'>
+					<input
+					type="hidden"
+					id="session-id"
+					name="session_id"
+					value={sessionId}
+					/>
+					<Button id="checkout-and-portal-button" type="submit" className=''>
+						Manage your Subscriptions
+					</Button>
+				</form>
+			}
 		</div>
 	);
 }

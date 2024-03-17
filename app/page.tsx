@@ -7,6 +7,7 @@ import Image from 'next/image'
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import AnimatedDiv from '@/components/animate'
+import Link from 'next/link'
 
 export default function Index() {
   return (
@@ -20,9 +21,12 @@ export default function Index() {
 		<AnimatedDiv direction='right' className='flex flex-col gap-4 mt-4'>
 		<CardTitle>Master your Musical Ear</CardTitle>
 		<CardDescription>Sight reading and ear training for musicians. Learn to be an amazing musician</CardDescription>
-		<Button size={"sm"} className='w-fit'>
-			Start Training
-		</Button>
+		<Link href="#starttraining" >
+			<Button size={"sm"}>
+
+			Go to Modules
+			</Button>
+		</Link>
 		</AnimatedDiv>
 		</div>
 		
@@ -46,7 +50,7 @@ export default function Index() {
 				<CardDescription>Develop a steady sense of rhythm by clapping or tapping along.</CardDescription>
 			</AnimatedDiv>
 		</div>
-		<div>
+		<div id='starttraining'>
 			<CardTitle>Ear Training</CardTitle>
 			<CardContent className='mt-4'>
 				<div className='flex justify-center gap-10 flex-wrap'>
