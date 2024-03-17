@@ -18,12 +18,12 @@ export default function Plan({ data, user, customerId }: {
 }) {
 	const userName = user.firstName ? user.firstName : "Empty";
 	return (
-		<form action="/api/create-checkout-session" method="POST">
+		<form action="/api/create-checkout-session" method="POST" >
 			<input hidden name="lookupKey" defaultValue={data.lookup_key} />
 			<input hidden name="customerId" defaultValue={customerId} />
 			<input hidden name="userId" defaultValue={user.id} />
 			<input hidden name="userName" defaultValue={userName} />
-			<Card className="w-[220px] text-center">
+			<Card className="w-[220px] text-center m-auto">
 				<CardHeader>{data.header}</CardHeader>
 				<CardContent className="mt-4 mb-4">
 					<CardDescription className="text-4xl m-4">${data.price}</CardDescription>

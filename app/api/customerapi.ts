@@ -22,10 +22,13 @@ export async function setCredits(object: Stripe.Invoice): Promise<boolean> {
 	console.log("setCredits()");
 	try {
 		const customer: Stripe.Customer = await stripe.customers.retrieve(object.customer);
+		const credits = object.lines.data[0].plan?.metadata?.credits;
+		if (credits === undefined) 
+			return false;
 		await stripe.customers.update(object.customer, {
 			metadata: {
 				...customer.metadata,
-				credits: object.lines.data[0].metadata.credits,
+				credits: credits,
 			}
 		});
 		return true;
@@ -35,11 +38,23 @@ export async function setCredits(object: Stripe.Invoice): Promise<boolean> {
 	}
 }
 
-export async function addCredits(customer: any, credits: number) {
+export async function findCustomerAndAddCredits(userId: string, credits: number): Promise<{ ok: boolean, credits?: number}> {
+	try {
+		const customers = await stripe.customers.list();
+		const customer = customers.data.find((_customer: { metadata: { userId: string }}) => _customer.metadata.userId === userId)
+		if (customer)
+			return await addCredits(customer, credits);
+		else 
+			return { ok: false };
+	} catch (e) {
+		console.error(e);
+		return { ok: false };
+	}
+}
+
+export async function addCredits(customer: Stripe.Customer, credits: number): Promise<{ ok: boolean, credits?: number}> {
 	try {
         console.log("addCredits()");
-        console.log("Credits to add:", credits);
-        
         const currentCredits = customer.metadata && customer.metadata.credits ? parseInt(customer.metadata.credits) : 0;
         const newTotalCredits = currentCredits + credits;
         
@@ -51,11 +66,11 @@ export async function addCredits(customer: any, credits: number) {
         });
         
         console.log("Customer credits updated successfully. New total credits:", newTotalCredits);
-        
-        return true;
+        return { ok: true, credits: newTotalCredits };
     } catch (error) {
         console.error("Error adding credits to customer:", error);
-        return false;
+		return { ok: false  };
+
     }
 }
 
@@ -66,9 +81,7 @@ export async function getCredits(userId: string): Promise<number> {
 		const customers = await stripe.customers.search({
 			query: `metadata[\'userId\']:\'${userId}\'`,
 		})
-		console.log(customers)
-		return customers.data[0].metadata.credits;
-
+		return parseInt(customers.data[0].metadata.credits);
 	} catch (error) {
 		console.error('Error fetching customer:', error);
 		throw error

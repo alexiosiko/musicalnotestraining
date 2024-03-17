@@ -18,7 +18,7 @@ export default function InstrumentPage() {
 	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
-	const [credits, setCredits] = useState<number>(0);
+	const [credits, setCredits] = useState<number>(-2);
 
 	useEffect(() => {
 		if (clerkUser.user == undefined)
@@ -66,7 +66,7 @@ export default function InstrumentPage() {
 				<Reveal src="url('/images/instruments/bouzouki-1.png')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
 				<div className="flex items-center justify-center">
 					<p className="text-center">Credits:</p>
-					{credits == 0 ? 
+					{credits === -2 ? 
 						<ThreeDots height={30} width={30} wrapperClass="ml-4" /> 
 						:
 						<p> 

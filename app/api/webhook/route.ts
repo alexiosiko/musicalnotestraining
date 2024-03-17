@@ -28,7 +28,6 @@ export async function POST(req: Request, res: Response) {
 				break;
 			default: break;
 		}
-
 	} catch (error) {
 		console.error(error);
 		return Response.json('Webhook handler failed.', { status: 400 });
