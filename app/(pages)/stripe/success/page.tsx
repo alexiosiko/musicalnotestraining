@@ -17,7 +17,7 @@ export default function Page() {
 			<div style={{ backgroundImage: `url(/images/thankyou.png)`}} className='bg-cover relative flex justify-center aspect-square w-full m-auto'>
 				<div className='m-auto text-center flex flex-col gap-12'>
 					<CardTitle className='text-7xl font-extrabold text-white '>Thank you!</CardTitle>
-					<CardDescription className=' text-white'>We&apos;re excited to help you improve your ear for music.<br />Here's how to get started:</CardDescription>
+					<CardDescription className=' text-white'>We&apos;re excited to help you improve your ear for music.<br />Here&apos;s how to get started:</CardDescription>
 					<Link href="/">
 						<Button size={"sm"} className='outline m-auto max-w-fit'>Go Home</Button>
 					</Link>

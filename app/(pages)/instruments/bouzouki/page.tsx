@@ -18,7 +18,7 @@ export default function InstrumentPage() {
 	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
-	const [credits, setCredits] = useState<number>(-2);
+	const [credits, setCredits] = useState<number>(0);
 
 	useEffect(() => {
 		if (clerkUser.user == undefined)
