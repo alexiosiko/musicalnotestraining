@@ -17,7 +17,7 @@ export default function InstrumentPage() {
 	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
-	const [credits, setCredits] = useState<number>(0);
+	const [credits, setCredits] = useState<number>(-2);
 
 	useEffect(() => {
 		if (clerkUser.user == undefined)
@@ -32,37 +32,20 @@ export default function InstrumentPage() {
 		
 	}, [clerkUser?.user]);
 
+	useEffect(() => {
+		shuffle();
+	}, [noteCount, tempo])
+
 	function shuffle() {
 		if (audios == null) 
 			return;
-		killAudios();
+		setIsPlaying(true);
 		setReveal(false);
 		setIsPlaying(false);
 		setAudios(getNewAudios(tempo, noteCount));
 	}
 
-	useEffect(() => {
-		shuffle();
-	}, [noteCount, tempo])
-
-	function killAudios() {
-		setIsPlaying(true);
-	}
-	
-
-	function getNotes() {
-		const note: string[] | undefined = audios?.map((audio: any) => {
-			let str = audio.howl._src;
-			str = str.slice(str.length - 7, str.length - 4);
-			str = str.replace('/', '');
-			str = str.replace('s', '#');
-			return  " " + str;
-		}
-		)
-		return <div>
-			{note?.toString()}
-		</div>
-	}
+	const getNotes = () => _getNotes(audios);
 
 	return (
 		<main className=" ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
@@ -103,6 +86,19 @@ export default function InstrumentPage() {
 	);
 }
 
+
+function _getNotes(audios: Audio[]) {
+	const note: string[] | undefined = audios?.map((audio: any) => {
+		let str = audio.howl._src;
+		str = str.slice(str.length - 6, str.length - 4);
+		str = str.replace('/', '');
+		str = str.replace('s', '#');
+		return  " " + str;
+	})
+	return <div>
+		{note?.toString()}
+	</div>
+}
 
 
 const notes = [

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { CardHeader } from "../ui/card";
 import { motion } from "framer-motion"
 export default function Instrument({ instrument, className, initial, whileInView, index } : {

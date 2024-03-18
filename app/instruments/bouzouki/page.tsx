@@ -46,18 +46,7 @@ export default function InstrumentPage() {
 		setAudios(getNewAudios(tempo, noteCount));
 	}
 
-	function getNotes() {
-		const note: string[] | undefined = audios?.map((audio: any) => {
-			let str = audio.howl._src;
-			str = str.slice(str.length - 6, str.length - 4);
-			str = str.replace('/', '');
-			str = str.replace('s', '#');
-			return  " " + str;
-		})
-		return <div>
-			{note?.toString()}
-		</div>
-	}
+	const getNotes = () => _getNotes(audios);
 	
 	return (
 		<main className="ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
@@ -79,8 +68,8 @@ export default function InstrumentPage() {
 					<p className="max-sm:w-24">Note Count:</p>
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider 
-						className="w-full"
-						disabled={isPlaying}
+							className="w-full"
+							disabled={isPlaying}
 							min={1} max={5} 
 							defaultValue={[3]} 
 							onValueChange={(value) => setNoteCount(value[0])} 
@@ -108,6 +97,19 @@ export default function InstrumentPage() {
 }
 
 
+function _getNotes(audios: Audio[]) {
+	const note: string[] | undefined = audios?.map((audio: any) => {
+		let str = audio.howl._src;
+		str = str.slice(str.length - 6, str.length - 4);
+		str = str.replace('/', '');
+		str = str.replace('s', '#');
+		return  " " + str;
+	})
+	return <div>
+		{note?.toString()}
+	</div>
+}
+
 const notes = [
 	"/notes/bouzouki/A.mp3",
     "/notes/bouzouki/As.mp3",
@@ -126,7 +128,9 @@ const notes = [
 function getRandomNote() {
 	const randomIndex = Math.floor(Math.random() * notes.length);
 	return notes[randomIndex];
-}function getNewAudios(tempo: number, noteCount: number): Audio[] {
+}
+
+function getNewAudios(tempo: number, noteCount: number): Audio[] {
 	const generateRandomDelay = () => (Math.random() * (750 - 200) + 200) / 1000;
 
 	const generateAudioWithDelay = () => {

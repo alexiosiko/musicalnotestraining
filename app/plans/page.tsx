@@ -59,7 +59,7 @@ export default function Plans() {
 				{clerkUser.user && customerId !== undefined && customerId !== null && (
 					<motion.div className='sm:grid grid-cols-3 items-center m-auto place-items-center'>
 						{plans.map((plan, index: number) => (
-							<motion.div key={index}>
+							<motion.div key={index} className='mb-4'>
 								<Plan customerId={customerId} user={clerkUser.user} data={plan} />
 							</motion.div>
 						))}

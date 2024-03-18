@@ -20,7 +20,7 @@ export default function Bouzouki({ audios, reveal }: {
 		<div
 			className='relative bg-cover bg-center w-full h-[250px] left-0 top-0'
 			style={{
-			backgroundImage: 'url(/bouzouki/bouzouki-fretboard.png)',
+				backgroundImage: 'url(/bouzouki/bouzouki-fretboard.png)',
 			}}
 			>
 			<div className='flex relative left-[3px] top-24 gap-2'>
