@@ -9,7 +9,7 @@ import { CardDescription, CardTitle } from '@/components/ui/card';
 import { ThreeDots } from 'react-loader-spinner';
 import { motion } from "framer-motion";
 import { Button } from '@/components/ui/button';
-import { getSessionId } from '../api/customerapi';
+import { getSessionId } from '../../api/customerapi';
 
 export default function Plans() {
 	const clerkUser = useUser();

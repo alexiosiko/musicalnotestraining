@@ -18,6 +18,7 @@ export default function InstrumentPage() {
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
 	const [credits, setCredits] = useState<number>(-2);
+	const [octave, setOctave] = useState<number>(4);
 
 	useEffect(() => {
 		if (clerkUser.user == undefined)
@@ -34,7 +35,7 @@ export default function InstrumentPage() {
 
 	useEffect(() => {
 		shuffle();
-	}, [noteCount, tempo])
+	}, [noteCount, tempo, octave])
 
 	function shuffle() {
 		if (audios == null) 
@@ -42,7 +43,7 @@ export default function InstrumentPage() {
 		setIsPlaying(true);
 		setReveal(false);
 		setIsPlaying(false);
-		setAudios(getNewAudios(tempo, noteCount));
+		setAudios(getNewAudios(tempo, noteCount, octave));
 	}
 
 	const getNotes = () => _getNotes(audios);
@@ -81,6 +82,19 @@ export default function InstrumentPage() {
 						<p className="w-14 text-right">{tempo == 0? <GiPerspectiveDiceSixFacesRandom /> : tempo}</p>
 					</div>
 				</div>
+				<div className="flex items-center justify-between">
+					<p className="w-24">Octave#:</p>
+					<div className="w-4/6 flex items-center gap-2">
+						<Slider
+						className="w-full"
+							disabled={isPlaying}
+							min={0} max={7}
+							defaultValue={[4]}
+							onValueChange={(value) => setOctave(value[0])} 
+							/>
+						<p className="w-14 text-right">{octave}</p>
+					</div>
+				</div>
 			</div>
 		</main>
 	);
@@ -102,33 +116,35 @@ function _getNotes(audios: Audio[]) {
 
 
 const notes = [
-	"/notes/piano/A3.mp3",
-    "/notes/piano/As3.mp3",
-    "/notes/piano/B3.mp3",
-    "/notes/piano/C3.mp3",
-    "/notes/piano/Cs3.mp3",
-    "/notes/piano/D3.mp3",
-    "/notes/piano/Ds3.mp3",
-    "/notes/piano/E3.mp3",
-    "/notes/piano/F3.mp3",
-    "/notes/piano/Fs3.mp3",
-    "/notes/piano/G3.mp3",
-    "/notes/piano/Gs3.mp3",
+	"/notes/piano/A.mp3",
+    "/notes/piano/As.mp3",
+    "/notes/piano/B.mp3",
+    "/notes/piano/C.mp3",
+    "/notes/piano/Cs.mp3",
+    "/notes/piano/D.mp3",
+    "/notes/piano/Ds.mp3",
+    "/notes/piano/E.mp3",
+    "/notes/piano/F.mp3",
+    "/notes/piano/Fs.mp3",
+    "/notes/piano/G.mp3",
+    "/notes/piano/Gs.mp3",
 ]
 
 
 
-function getRandomNote() {
+function getRandomNote(octave: number) {
 	const randomIndex = Math.floor(Math.random() * notes.length);
-	return notes[randomIndex];
+	const randomNote = notes[randomIndex];
+	return `/notes/piano/${randomNote}${octave}.mp3`;
+
 }
 
-function getNewAudios(tempo: number, noteCount: number): Audio[] {
+function getNewAudios(tempo: number, noteCount: number, octave: number): Audio[] {
 	const generateRandomDelay = () => (Math.random() * (750 - 200) + 200) / 1000;
 
 	const generateAudioWithDelay = () => {
 		const delay = tempo === 0 ? generateRandomDelay() : tempo;
-		const howl = new Howl({ src: getRandomNote() });
+		const howl = new Howl({ src: getRandomNote(octave) });
 		return new Audio(howl, delay);
 	};
 

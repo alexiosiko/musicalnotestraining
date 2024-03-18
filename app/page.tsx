@@ -51,7 +51,9 @@ export default function Index() {
 			</AnimatedDiv>
 		</div>
 		<div id='starttraining'>
-			<CardTitle>Ear Training</CardTitle>
+			<AnimatedDiv direction='up' delay={0.1}> 
+				<CardTitle>Ear Training</CardTitle>
+			</AnimatedDiv>
 			<CardContent className='mt-4'>
 				<div className='flex justify-center gap-10 flex-wrap'>
 					{instruments.map((instrument, index) => 
