@@ -17,7 +17,7 @@ export default function InstrumentPage() {
 	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
-	const [credits, setCredits] = useState<number>(-2);
+	const [credits, setCredits] = useState<number>(0);
 	const [octave, setOctave] = useState<number>(4);
 
 	useEffect(() => {
@@ -116,18 +116,18 @@ function _getNotes(audios: Audio[]) {
 
 
 const notes = [
-	"/notes/piano/A.mp3",
-    "/notes/piano/As.mp3",
-    "/notes/piano/B.mp3",
-    "/notes/piano/C.mp3",
-    "/notes/piano/Cs.mp3",
-    "/notes/piano/D.mp3",
-    "/notes/piano/Ds.mp3",
-    "/notes/piano/E.mp3",
-    "/notes/piano/F.mp3",
-    "/notes/piano/Fs.mp3",
-    "/notes/piano/G.mp3",
-    "/notes/piano/Gs.mp3",
+	"/notes/piano/A",
+    "/notes/piano/As",
+    "/notes/piano/B",
+    "/notes/piano/C",
+    "/notes/piano/Cs",
+    "/notes/piano/D",
+    "/notes/piano/Ds",
+    "/notes/piano/E",
+    "/notes/piano/F",
+    "/notes/piano/Fs",
+    "/notes/piano/G",
+    "/notes/piano/Gs",
 ]
 
 
@@ -135,7 +135,9 @@ const notes = [
 function getRandomNote(octave: number) {
 	const randomIndex = Math.floor(Math.random() * notes.length);
 	const randomNote = notes[randomIndex];
-	return `/notes/piano/${randomNote}${octave}.mp3`;
+	const str = `${randomNote}${octave}.mp3`;
+	console.log(str);
+	return str;
 
 }
 

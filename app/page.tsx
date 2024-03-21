@@ -16,7 +16,7 @@ export default function Index() {
 		<AnimatedDiv
 		direction='left'
 			style={{ backgroundImage: `url("/images/landingpage/landingmain.png")` }}
-			className='bg-contain bg-center bg-accent h-[230px] rounded-3xl flex'
+			className='bg-contain bg-center bg-accent h-[220px] rounded-3xl flex'
 			/>
 		<AnimatedDiv direction='right' className='flex flex-col gap-4 mt-4'>
 		<CardTitle>Master your Musical Ear</CardTitle>
