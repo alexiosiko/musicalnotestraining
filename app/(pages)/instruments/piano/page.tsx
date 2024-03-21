@@ -88,7 +88,7 @@ export default function InstrumentPage() {
 						<Slider
 						className="w-full"
 							disabled={isPlaying}
-							min={0} max={7}
+							min={1} max={7}
 							defaultValue={[4]}
 							onValueChange={(value) => setOctave(value[0])} 
 							/>
@@ -103,8 +103,9 @@ export default function InstrumentPage() {
 
 function _getNotes(audios: Audio[]) {
 	const note: string[] | undefined = audios?.map((audio: any) => {
-		let str = audio.howl._src;
-		str = str.slice(str.length - 6, str.length - 4);
+		let str: string = audio.howl._src;
+		console.log(str);
+		str = str.slice(str.length - 7, str.length - 4);
 		str = str.replace('/', '');
 		str = str.replace('s', '#');
 		return  " " + str;
@@ -136,7 +137,6 @@ function getRandomNote(octave: number) {
 	const randomIndex = Math.floor(Math.random() * notes.length);
 	const randomNote = notes[randomIndex];
 	const str = `${randomNote}${octave}.mp3`;
-	console.log(str);
 	return str;
 
 }
