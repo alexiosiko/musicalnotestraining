@@ -1,5 +1,6 @@
 "use client"
 
+
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import Play from "@/components/play";
@@ -8,7 +9,6 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
-import { ThreeDots } from "react-loader-spinner";
 import { getCredits } from "@/app/api/customerapi";
 import { stopCurrentAudios } from "@/lib/utils";
 
@@ -20,6 +20,7 @@ export default function InstrumentPage() {
 	const [reveal, setReveal] = useState(false);
 	const [audios, setAudios] = useState<Audio[]>([]);
 	const [credits, setCredits] = useState<number>(0);
+	const [octave, setOctave] = useState<number>(2);
 
 	useEffect(() => {
 		if (clerkUser.user == undefined)
@@ -35,8 +36,9 @@ export default function InstrumentPage() {
 	}, [clerkUser?.user]);
 
 	useEffect(() => {
+		
 		shuffle();
-	}, [noteCount, tempo])
+	}, [noteCount, tempo, octave])
 
 	function shuffle() {
 		if (audios == null) 
@@ -45,33 +47,26 @@ export default function InstrumentPage() {
 		setIsPlaying(true);
 		setReveal(false);
 		setIsPlaying(false);
-		setAudios(getNewAudios(tempo, noteCount));
+		const newAudios = getNewAudios(tempo, noteCount, octave);
+		console.log(newAudios);
+		setAudios(newAudios);
 	}
 
 	const getNotes = () => _getNotes(audios);
-	
+
 	return (
-		<main className="ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className=" ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<p className="text-center">Bouzouki</p>
+				<p className="text-center">Bass Electric</p>
 				<Reveal getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
-				<div className="flex items-center justify-center">
-					<p className="text-center">Credits:</p>
-					{credits === -2 ? 
-						<ThreeDots height={30} width={30} wrapperClass="ml-4" /> 
-						:
-						<p> 
-							{credits}
-						</p>
-					}
-				</div>
+				<p className="text-center">Credits: {credits}</p>
 				<Play credits={credits} setCredits={setCredits} id={clerkUser.user?.id} audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 				<div className="flex items-center justify-between">
 					<p className="max-sm:w-24 max-sm:text-sm">Note Count:</p>
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider 
-							className="w-full"
-							disabled={isPlaying}
+						className="w-full"
+						disabled={isPlaying}
 							min={1} max={5} 
 							defaultValue={[3]} 
 							onValueChange={(value) => setNoteCount(value[0])} 
@@ -93,16 +88,29 @@ export default function InstrumentPage() {
 						<p className="w-14 max-sm:text-sm">{tempo == 0? <GiPerspectiveDiceSixFacesRandom /> : tempo}</p>
 					</div>
 				</div>
+				<div className="flex items-center justify-between">
+					<p className="w-24 max-sm:text-sm">Octave#:</p>
+					<div className="w-4/6 flex items-center gap-2">
+						<Slider
+						className="w-full"
+							disabled={isPlaying}
+							min={1} max={4}
+							defaultValue={[2]}
+							onValueChange={(value) => setOctave(value[0])} 
+							/>
+						<p className="w-14 max-sm:text-sm">{octave}</p>
+					</div>
+				</div>
 			</div>
 		</main>
 	);
 }
 
-
 function _getNotes(audios: Audio[]) {
 	const note: string[] | undefined = audios?.map((audio: any) => {
-		let str = audio.howl._src;
-		str = str.slice(str.length - 6, str.length - 4);
+		let str: string = audio.howl._src;
+		console.log(str);
+		str = str.slice(str.length - 7, str.length - 4);
 		str = str.replace('/', '');
 		str = str.replace('s', '#');
 		return  " " + str;
@@ -112,34 +120,41 @@ function _getNotes(audios: Audio[]) {
 	</div>
 }
 
+
 const notes = [
-	"/notes/bouzouki/A.mp3",
-    "/notes/bouzouki/As.mp3",
-    "/notes/bouzouki/B.mp3",
-    "/notes/bouzouki/C.mp3",
-    "/notes/bouzouki/Cs.mp3",
-    "/notes/bouzouki/D.mp3",
-    "/notes/bouzouki/Ds.mp3",
-    "/notes/bouzouki/E.mp3",
-    "/notes/bouzouki/F.mp3",
-    "/notes/bouzouki/Fs.mp3",
-    "/notes/bouzouki/G.mp3",
-    "/notes/bouzouki/Gs.mp3",
+	// "/notes/bass-electric/A",
+    "/notes/bass-electric/As",
+    // "/notes/bass-electric/B",
+    // "/notes/bass-electric/C",
+    "/notes/bass-electric/Cs",
+    // "/notes/bass-electric/D",
+    // "/notes/bass-electric/Ds",
+    "/notes/bass-electric/E",
+    // "/notes/bass-electric/F",
+    // "/notes/bass-electric/Fs",
+    "/notes/bass-electric/G",
+    // "/notes/bass-electric/Gs",
 ]
 
-function getRandomNote() {
+
+
+function getRandomNote(octave: number) {
 	const randomIndex = Math.floor(Math.random() * notes.length);
-	return notes[randomIndex];
+	const randomNote = notes[randomIndex];
+	const str = `${randomNote}${octave}.mp3`;
+	return str;
+
 }
 
-function getNewAudios(tempo: number, noteCount: number): Audio[] {
+function getNewAudios(tempo: number, noteCount: number, octave: number): Audio[] {
 	const generateRandomDelay = () => (Math.random() * (750 - 200) + 200) / 1000;
 
 	const generateAudioWithDelay = () => {
 		const delay = tempo === 0 ? generateRandomDelay() : tempo;
-		const howl = new Howl({ src: getRandomNote() });
+		const howl = new Howl({ src: getRandomNote(octave) });
 		return new Audio(howl, delay);
 	};
 
 	return Array.from({ length: noteCount }, generateAudioWithDelay);
 }
+

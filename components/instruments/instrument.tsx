@@ -18,7 +18,7 @@ export default function Instrument({ instrument, className, initial, whileInView
 				href={instrument.href}
 				className={`${className} hover:scale-120 hover:bg-red-400 hover:cursor-pointer transition`}
 				>
-				<Image src={instrument.src} alt={instrument.src} width={250} height={250} />
+				<Image className="rounded-full" src={instrument.src} alt={instrument.src} width={165} height={165} />
 				<CardHeader className="text-center mt-1">{instrument.name}</CardHeader>
 			</a>
 		</motion.div>

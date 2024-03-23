@@ -9,6 +9,7 @@ import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
 import { getCredits } from "@/app/api/customerapi";
+import { stopCurrentAudios } from "@/lib/utils";
 
 export default function InstrumentPage() {
 	const clerkUser = useUser();
@@ -40,6 +41,7 @@ export default function InstrumentPage() {
 	function shuffle() {
 		if (audios == null) 
 			return;
+		stopCurrentAudios(audios);
 		setIsPlaying(true);
 		setReveal(false);
 		setIsPlaying(false);
@@ -52,25 +54,24 @@ export default function InstrumentPage() {
 		<main className=" ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
 				<p className="text-center">Piano</p>
-				<Reveal src="url('/images/instruments/piano-1.jpg')" getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
+				<Reveal getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
 				<p className="text-center">Credits: {credits}</p>
 				<Play credits={credits} setCredits={setCredits} id={clerkUser.user?.id} audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 				<div className="flex items-center justify-between">
-					<p className="max-sm:w-24">Note Count:</p>
+					<p className="max-sm:w-24 max-sm:text-sm">Note Count:</p>
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider 
-						className="w-full"
-						disabled={isPlaying}
+							className="w-full"
+							disabled={isPlaying}
 							min={1} max={5} 
 							defaultValue={[3]} 
 							onValueChange={(value) => setNoteCount(value[0])} 
 						/>
-						<p className="w-14">{noteCount}</p>
+						<p className="w-14 max-sm:text-sm">{noteCount}</p>
 					</div>
 				</div>
-
 				<div className="flex items-center justify-between">
-					<p className="w-24">Tempo:</p>
+					<p className="w-24 max-sm:text-sm">Tempo:</p>
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider
 						className="w-full"
@@ -79,20 +80,20 @@ export default function InstrumentPage() {
 							defaultValue={[7]}
 							onValueChange={(value) => setTempo(value[0]/10)} 
 							/>
-						<p className="w-14 text-right">{tempo == 0? <GiPerspectiveDiceSixFacesRandom /> : tempo}</p>
+						<p className="w-14 max-sm:text-sm">{tempo == 0? <GiPerspectiveDiceSixFacesRandom /> : tempo}</p>
 					</div>
 				</div>
 				<div className="flex items-center justify-between">
-					<p className="w-24">Octave#:</p>
+					<p className="w-24 max-sm:text-sm">Octave#:</p>
 					<div className="w-4/6 flex items-center gap-2">
 						<Slider
 						className="w-full"
 							disabled={isPlaying}
 							min={1} max={7}
-							defaultValue={[4]}
+							defaultValue={[2]}
 							onValueChange={(value) => setOctave(value[0])} 
 							/>
-						<p className="w-14 text-right">{octave}</p>
+						<p className="w-14 max-sm:text-sm">{octave}</p>
 					</div>
 				</div>
 			</div>
@@ -130,7 +131,6 @@ const notes = [
     "/notes/piano/G",
     "/notes/piano/Gs",
 ]
-
 
 
 function getRandomNote(octave: number) {

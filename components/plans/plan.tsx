@@ -6,23 +6,31 @@ import type { UserResource } from '@clerk/types';
 
 // const asyncStripe = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY as string);
 
-export default function Plan({ data, user, customerId }: {
+export default function Plan({ data, user, customerId, alertDialogTriggerRef }: {
   data: {
     header: string;
     price: string;
     credits: number;
 	lookup_key: string,
   },
-  user: UserResource,
-  customerId: string
+  user: UserResource | null | undefined,
+  customerId: string | undefined,
+  alertDialogTriggerRef: React.RefObject<HTMLButtonElement>
 }) {
-	const userName = user.firstName ? user.firstName : "Empty";
+	const userName = user ? user.firstName : "Empty";
+	const action = user ? "/api/create-checkout-session" : undefined; 
+	function onClick(e: any) {
+		if (action == undefined) {
+			e.preventDefault();
+			alertDialogTriggerRef.current?.click();
+		}
+	}
 	return (
-		<form action="/api/create-checkout-session" method="POST" encType="application/json">
+		<form action={action} onClick={onClick} method="POST" encType="application/json">
 			<input hidden name="lookupKey" defaultValue={data.lookup_key} />
 			<input hidden name="customerId" defaultValue={customerId} />
-			<input hidden name="userId" defaultValue={user.id} />
-			<input hidden name="userName" defaultValue={userName} />
+			<input hidden name="userId" defaultValue={user ? user.id : "NULL"} />
+			<input hidden name="userName" defaultValue={user?.firstName ? user.firstName : "NULL"} />
 			<Card className="w-[220px] text-center m-auto">
 				<CardHeader>{data.header}</CardHeader>
 				<CardContent className="mt-4 mb-4">

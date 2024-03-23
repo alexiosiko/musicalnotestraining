@@ -34,6 +34,7 @@ export default function Index() {
 			<CardTitle>Categories</CardTitle>
 		</AnimatedDiv>
 		<div className='sm:grid grid-cols-3 gap-4 '>
+
 			<AnimatedDiv className='mb-4' direction='right' delay={0.2}>
 				<Image src="/images/landingpage/eartraining.png" width={400} height={250} alt='module.png' />
 				<CardHeader>Ear Training</CardHeader>

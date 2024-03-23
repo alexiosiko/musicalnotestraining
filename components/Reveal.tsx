@@ -5,24 +5,20 @@ import { Button } from "./ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Audio } from "@/types/audio";
 
-export default function Reveal({ audios, reveal, setReveal, src, getNotes }: { 
+export default function Reveal({ audios, reveal, setReveal, getNotes }: { 
 	audios: Audio[] | undefined,
 	reveal: boolean,
 	setReveal: Dispatch<SetStateAction<boolean>>,
-	src: string,
 	getNotes: () => JSX.Element
 }) {
-	function onClick() {
-		setReveal(!reveal);
-	}
+	const onClick = () => setReveal(!reveal);
 	return (
 		<Button
-		style={{ backgroundImage: src}}
 			onClick={onClick}
 			variant={'secondary'}
-			className="w-full h-[300px] aspect-square bg-cover text-background bg-center flex m-auto text-4xl">
+			className="m-auto text-4xl w-full md:mt-12 md:mb-12">
 				{reveal ?
-					<div style={{ textShadow: '2px 2px black'}} className="">
+					<div style={{ textShadow: '2px 2px black'}} className="text-background">
 						{getNotes()}
 					</div> 
 					: 

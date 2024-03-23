@@ -1,5 +1,6 @@
 "use client"
 
+
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import Play from "@/components/play";
@@ -8,7 +9,6 @@ import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import Reveal from "@/components/Reveal";
 import { useUser } from "@clerk/nextjs";
-import { ThreeDots } from "react-loader-spinner";
 import { getCredits } from "@/app/api/customerapi";
 import { stopCurrentAudios } from "@/lib/utils";
 
@@ -49,22 +49,13 @@ export default function InstrumentPage() {
 	}
 
 	const getNotes = () => _getNotes(audios);
-	
+
 	return (
-		<main className="ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className=" ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
-				<p className="text-center">Bouzouki</p>
+				<p className="text-center">Flute</p>
 				<Reveal getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
-				<div className="flex items-center justify-center">
-					<p className="text-center">Credits:</p>
-					{credits === -2 ? 
-						<ThreeDots height={30} width={30} wrapperClass="ml-4" /> 
-						:
-						<p> 
-							{credits}
-						</p>
-					}
-				</div>
+				<p className="text-center">Credits: {credits}</p>
 				<Play credits={credits} setCredits={setCredits} id={clerkUser.user?.id} audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 				<div className="flex items-center justify-between">
 					<p className="max-sm:w-24 max-sm:text-sm">Note Count:</p>
@@ -101,8 +92,9 @@ export default function InstrumentPage() {
 
 function _getNotes(audios: Audio[]) {
 	const note: string[] | undefined = audios?.map((audio: any) => {
-		let str = audio.howl._src;
-		str = str.slice(str.length - 6, str.length - 4);
+		let str: string = audio.howl._src;
+		console.log(str);
+		str = str.slice(str.length - 7, str.length - 4);
 		str = str.replace('/', '');
 		str = str.replace('s', '#');
 		return  " " + str;
@@ -112,24 +104,26 @@ function _getNotes(audios: Audio[]) {
 	</div>
 }
 
+
 const notes = [
-	"/notes/bouzouki/A.mp3",
-    "/notes/bouzouki/As.mp3",
-    "/notes/bouzouki/B.mp3",
-    "/notes/bouzouki/C.mp3",
-    "/notes/bouzouki/Cs.mp3",
-    "/notes/bouzouki/D.mp3",
-    "/notes/bouzouki/Ds.mp3",
-    "/notes/bouzouki/E.mp3",
-    "/notes/bouzouki/F.mp3",
-    "/notes/bouzouki/Fs.mp3",
-    "/notes/bouzouki/G.mp3",
-    "/notes/bouzouki/Gs.mp3",
+	"/notes/flute/A4.mp3",
+    "/notes/flute/A5.mp3",
+    "/notes/flute/A6.mp3",
+    "/notes/flute/C4.mp3",
+    "/notes/flute/C5.mp3",
+    "/notes/flute/C6.mp3",
+    "/notes/flute/C7.mp3",
+    "/notes/flute/E4.mp3",
+    "/notes/flute/E5.mp3",
+    "/notes/flute/E6.mp3",
 ]
+
+
 
 function getRandomNote() {
 	const randomIndex = Math.floor(Math.random() * notes.length);
 	return notes[randomIndex];
+
 }
 
 function getNewAudios(tempo: number, noteCount: number): Audio[] {
