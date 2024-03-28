@@ -7,7 +7,7 @@ import Play from "@/components/play";
 import { Howl } from 'howler';
 import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
-import Reveal from "@/components/reveal";
+import Reveal from "@/components/Reveal";
 import { stopCurrentAudios } from "@/lib/utils";
 
 export default function InstrumentPage() {
