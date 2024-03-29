@@ -1,22 +1,26 @@
 "use client"
 
 import React, { Dispatch, SetStateAction } from "react"
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Audio } from "@/types/audio";
 
-export default function Reveal({ audios, reveal, setReveal, getNotes }: { 
+export default function Reveal({ audios, reveal, setReveal }: { 
 	audios: Audio[] | undefined,
 	reveal: boolean,
 	setReveal: Dispatch<SetStateAction<boolean>>,
-	getNotes: () => JSX.Element
 }) {
 	const onClick = () => setReveal(!reveal);
+	function getNotes() {
+		let notes: string = "";
+		notes += audios?.map(audio  => " " + audio.note);
+		return notes;
+	}
 	return (
 		<Button
 			onClick={onClick}
 			variant={'secondary'}
-			className="m-auto text-4xl w-full md:mt-12 md:mb-12">
+			className="m-auto text-4xl w-full">
 				{reveal ?
 					<div style={{ textShadow: '2px 2px black'}} className="text-background">
 						{getNotes()}

@@ -5,11 +5,9 @@ export default function Shuffle({ shuffle, isPlaying }: {
 	shuffle:  () => void,
 	isPlaying: boolean,
 }) {
-	
-	
 	return (
 		<Button 
-			variant={"ghost"}
+			variant={"destructive"}
 			disabled={isPlaying}
 			className="text-3xl"
 			onClick={shuffle}>

@@ -1,16 +1,13 @@
 import { Audio } from "@/types/audio";
 import { Dispatch, SetStateAction, useRef } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { CiPlay1 } from "react-icons/ci";
 import { Bars } from 'react-loader-spinner'
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-export default function Play({ audios, isPlaying, setIsPlaying, id: userId, setCredits, credits }: { 
+export default function Play({ audios, isPlaying, setIsPlaying }: { 
 	audios: Audio[] | undefined,
 	isPlaying: boolean,
 	setIsPlaying: Dispatch<SetStateAction<boolean>>,
-	id: string | undefined,
-	setCredits: Dispatch<SetStateAction<number>>,
-	credits: number
 }) {
 	const alertDialogTriggerRef = useRef<HTMLButtonElement>(null);
 	
@@ -64,17 +61,14 @@ export default function Play({ audios, isPlaying, setIsPlaying, id: userId, setC
 				</AlertDialogContent>
 			</AlertDialog>
 			<Button
+				disabled={isPlaying}
 				onClick={onPlay}		
-				variant={"ghost"}
 				className="text-3xl"
 			>
 				{isPlaying ? (
 					<Bars width={30} />
 				) : (
-					<>
-						<CiPlay1 className="text-3xl relative" />
-						<p className="absolute translate-x-[70%] text-sm text-secondary">Costs 1 credits</p>
-					</>
+					<CiPlay1 />
 				)}
 			</Button>
 		</>

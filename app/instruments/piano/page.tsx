@@ -2,26 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
-import Play from "@/components/play";
+import Play from "@/components/instruments/play";
 import { Howl } from 'howler';
 import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
-import Reveal from "@/components/Reveal";
-import { stopCurrentAudios } from "@/lib/utils";
+import Reveal from "@/components/instruments/Reveal";
+import { formateNote, stopCurrentAudios } from "@/lib/utils";
+import Shuffle from "@/components/instruments/shuffle";
 
 export default function InstrumentPage() {
-	const [tempo, setTempo] = useState<number>(0.7);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
-	const [audios, setAudios] = useState<Audio[]>([]);
-	const [credits, setCredits] = useState<number>(0);
-	const [octave, setOctave] = useState<number>(4);
+	const [audios, setAudios] = useState<Audio[]>(getNewAudios(0.5, 4));
 
-
-	useEffect(() => {
-		shuffle();
-	}, [noteCount, tempo, octave])
 
 	function shuffle() {
 		if (audios == null) 
@@ -30,61 +23,23 @@ export default function InstrumentPage() {
 		setIsPlaying(true);
 		setReveal(false);
 		setIsPlaying(false);
-		setAudios(getNewAudios(tempo, noteCount, octave));
+		setAudios(getNewAudios(0.5, 4));
 	}
 
-	const getNotes = () => _getNotes(audios);
-
 	return (
-		<main className=" ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className="ml-auto mr-auto h-[80vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
 				<p className="text-center">Piano</p>
-				<Reveal getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
-				<p className="text-center">Credits: {credits}</p>
-				<Play credits={credits} setCredits={setCredits} id={undefined} audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
-				<div className="flex items-center justify-between">
-					<p className="max-sm:w-24 max-sm:text-sm">Note Count:</p>
-					<div className="w-4/6 flex items-center gap-2">
-						<Slider 
-							className="w-full"
-							disabled={isPlaying}
-							min={1} max={5} 
-							defaultValue={[3]} 
-							onValueChange={(value) => setNoteCount(value[0])} 
-						/>
-						<p className="w-14 max-sm:text-sm">{noteCount}</p>
-					</div>
-				</div>
-				<div className="flex items-center justify-between">
-					<p className="w-24 max-sm:text-sm">Tempo:</p>
-					<div className="w-4/6 flex items-center gap-2">
-						<Slider
-						className="w-full"
-							disabled={isPlaying}
-							min={0} max={10}
-							defaultValue={[7]}
-							onValueChange={(value) => setTempo(value[0]/10)} 
-							/>
-						<p className="w-14 max-sm:text-sm">{tempo == 0? <GiPerspectiveDiceSixFacesRandom /> : tempo}</p>
-					</div>
-				</div>
-				<div className="flex items-center justify-between">
-					<p className="w-24 max-sm:text-sm">Octave#:</p>
-					<div className="w-4/6 flex items-center gap-2">
-						<Slider
-						className="w-full"
-							disabled={isPlaying}
-							min={1} max={7}
-							defaultValue={[2]}
-							onValueChange={(value) => setOctave(value[0])} 
-							/>
-						<p className="w-14 max-sm:text-sm">{octave}</p>
-					</div>
+				<Reveal reveal={reveal} setReveal={setReveal} audios={audios} />
+				<div className="flex  justify-around">
+					<Shuffle isPlaying={isPlaying} shuffle={shuffle} />
+					<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 				</div>
 			</div>
 		</main>
 	);
 }
+
 
 
 function _getNotes(audios: Audio[]) {
@@ -103,36 +58,47 @@ function _getNotes(audios: Audio[]) {
 
 
 const notes = [
-	"/notes/piano/A",
-    "/notes/piano/As",
-    "/notes/piano/B",
-    "/notes/piano/C",
-    "/notes/piano/Cs",
-    "/notes/piano/D",
-    "/notes/piano/Ds",
-    "/notes/piano/E",
-    "/notes/piano/F",
-    "/notes/piano/Fs",
-    "/notes/piano/G",
-    "/notes/piano/Gs",
+	"/notes/piano/A4.mp3",
+    "/notes/piano/As4.mp3",
+    "/notes/piano/B4.mp3",
+    "/notes/piano/C4.mp3",
+    "/notes/piano/Cs4.mp3",
+    "/notes/piano/D4.mp3",
+    "/notes/piano/Ds4.mp3",
+    "/notes/piano/E4.mp3",
+    "/notes/piano/F4.mp3",
+    "/notes/piano/Fs4.mp3",
+    "/notes/piano/G4.mp3",
+    "/notes/piano/Gs4.mp3",
+	"/notes/piano/A5.mp3",
+    "/notes/piano/As5.mp3",
+    "/notes/piano/B5.mp3",
+    "/notes/piano/C5.mp3",
+    "/notes/piano/Cs5.mp3",
+    "/notes/piano/D5.mp3",
+    "/notes/piano/Ds5.mp3",
+    "/notes/piano/E5.mp3",
+    "/notes/piano/F5.mp3",
+    "/notes/piano/Fs5.mp3",
+    "/notes/piano/G5.mp3",
+    "/notes/piano/Gs5.mp3",
 ]
 
 
-function getRandomNote(octave: number) {
+function getRandomNote() {
 	const randomIndex = Math.floor(Math.random() * notes.length);
-	const randomNote = notes[randomIndex];
-	const str = `${randomNote}${octave}.mp3`;
-	return str;
-
+	return notes[randomIndex];
 }
 
-function getNewAudios(tempo: number, noteCount: number, octave: number): Audio[] {
+function getNewAudios(tempo: number, noteCount: number): Audio[] {
 	const generateRandomDelay = () => (Math.random() * (750 - 200) + 200) / 1000;
 
 	const generateAudioWithDelay = () => {
 		const delay = tempo === 0 ? generateRandomDelay() : tempo;
-		const howl = new Howl({ src: getRandomNote(octave) });
-		return new Audio(howl, delay);
+		const src = getRandomNote();
+		const howl = new Howl({ src: src });
+		const note = formateNote(src);
+		return new Audio(howl, delay, note);
 	};
 
 	return Array.from({ length: noteCount }, generateAudioWithDelay);

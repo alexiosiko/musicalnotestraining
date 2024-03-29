@@ -3,25 +3,20 @@
 
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
-import Play from "@/components/play";
+import Play from "@/components/instruments/play";
 import { Howl } from 'howler';
 import { Audio } from "@/types/audio";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
-import Reveal from "@/components/Reveal";
-import { stopCurrentAudios } from "@/lib/utils";
+import Reveal from "@/components/instruments/Reveal";
+import { formateNote, stopCurrentAudios } from "@/lib/utils";
+import Shuffle from "@/components/instruments/shuffle";
 
 export default function InstrumentPage() {
-	const [tempo, setTempo] = useState<number>(0.7);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [noteCount, setNoteCount] = useState(3);
 	const [reveal, setReveal] = useState(false);
-	const [audios, setAudios] = useState<Audio[]>([]);
-	const [credits, setCredits] = useState<number>(0);
+	const [audios, setAudios] = useState<Audio[]>(getNewAudios(0.5, 4));
 
 
-	useEffect(() => {
-		shuffle();
-	}, [noteCount, tempo])
 
 	function shuffle() {
 		if (audios == null) 
@@ -30,50 +25,23 @@ export default function InstrumentPage() {
 		setIsPlaying(true);
 		setReveal(false);
 		setIsPlaying(false);
-		setAudios(getNewAudios(tempo, noteCount));
+		setAudios(getNewAudios(0.5, 4));
 	}
 
-	const getNotes = () => _getNotes(audios);
-
 	return (
-		<main className=" ml-auto mr-auto h-[85vh] p-4 flex flex-col justify-center gap-24">
+		<main className="ml-auto mr-auto h-[80vh] p-4 flex flex-col justify-center gap-24">
 			<div className="flex flex-col gap-4 mt-4">
 				<p className="text-center">Violin</p>
-				<Reveal getNotes={getNotes} reveal={reveal} setReveal={setReveal} audios={audios} />
-				<p className="text-center">Credits: {credits}</p>
-				<Play credits={credits} setCredits={setCredits} id={undefined} audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
-				<div className="flex items-center justify-between">
-					<p className="max-sm:w-24 max-sm:text-sm">Note Count:</p>
-					<div className="w-4/6 flex items-center gap-2">
-						<Slider 
-							className="w-full"
-							disabled={isPlaying}
-							min={1} max={5} 
-							defaultValue={[3]} 
-							onValueChange={(value) => setNoteCount(value[0])} 
-						/>
-						<p className="w-14 max-sm:text-sm">{noteCount}</p>
-					</div>
+				<Reveal reveal={reveal} setReveal={setReveal} audios={audios} />
+				<div className="flex  justify-around">
+					<Shuffle isPlaying={isPlaying} shuffle={shuffle} />
+					<Play audios={audios} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 				</div>
-
-				<div className="flex items-center justify-between">
-					<p className="w-24 max-sm:text-sm">Tempo:</p>
-					<div className="w-4/6 flex items-center gap-2">
-						<Slider
-						className="w-full"
-							disabled={isPlaying}
-							min={0} max={10}
-							defaultValue={[7]}
-							onValueChange={(value) => setTempo(value[0]/10)} 
-							/>
-						<p className="w-14 max-sm:text-sm">{tempo == 0? <GiPerspectiveDiceSixFacesRandom /> : tempo}</p>
-					</div>
-				</div>
-				
 			</div>
 		</main>
 	);
 }
+
 
 
 function _getNotes(audios: Audio[]) {
@@ -119,8 +87,10 @@ function getNewAudios(tempo: number, noteCount: number): Audio[] {
 
 	const generateAudioWithDelay = () => {
 		const delay = tempo === 0 ? generateRandomDelay() : tempo;
-		const howl = new Howl({ src: getRandomNote() });
-		return new Audio(howl, delay);
+		const src = getRandomNote();
+		const howl = new Howl({ src: src });
+		const note = formateNote(src);
+		return new Audio(howl, delay, note);
 	};
 
 	return Array.from({ length: noteCount }, generateAudioWithDelay);

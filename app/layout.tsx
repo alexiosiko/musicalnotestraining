@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-		<html lang="en" className="text-foreground bg-background" style={{ scrollBehavior: 'smooth'}}>
+		<html lang="en" className=" text-foreground bg-background" style={{ scrollBehavior: 'smooth'}}>
 			<body className={`${inter.className} flex flex-col min-h-screen`}>
 				<div className="flex-grow">
 					<Nav />
