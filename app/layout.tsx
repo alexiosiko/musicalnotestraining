@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { ClerkProvider, SignIn, SignInButton, UserButton } from "@clerk/nextjs";
 import Nav from "@/components/nav";
+import { CardFooter } from "@/components/ui/card";
 
 const inter = Poppins({
   subsets: ["latin"],
@@ -26,7 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-		<html lang="en" className=" text-foreground bg-background" style={{ scrollBehavior: 'smooth'}}>
+    <ClerkProvider>
+		<html lang="en" className="text-foreground bg-background" style={{ scrollBehavior: 'smooth'}}>
 			<body className={`${inter.className} flex flex-col min-h-screen`}>
 				<div className="flex-grow">
 					<Nav />
@@ -40,5 +43,6 @@ export default function RootLayout({
 			</body>
 			<Analytics />
 		</html>
+    </ClerkProvider>
   );
 }
