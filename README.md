@@ -1,1 +1,1 @@
-<a href="https://www.musicalnotestraining.com/"><h1>DEMO</h1></a>
+<h1><a href="https://www.musicalnotestraining.com/">DEMO</a></h1>
